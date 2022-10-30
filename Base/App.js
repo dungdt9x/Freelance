@@ -8,7 +8,7 @@
 
 import React, {useEffect, useState} from 'react';
 import type {Node} from 'react';
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import {SafeAreaView, StatusBar, Text, View} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import AnimatedSplash from 'react-native-animated-splash-screen';
 
@@ -33,7 +33,9 @@ const App: () => Node = () => {
       logoWidth={100}>
       <SafeAreaView style={'white'}>
         <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
-        <View />
+        <View>
+          <Text style={{fontSize: 20, color: 'red'}}>Demo</Text>
+        </View>
       </SafeAreaView>
     </AnimatedSplash>
   );
