@@ -8,14 +8,16 @@
     "start": "npx react-native start",
     "test": "jest",
     "android:devices": "cd /Users/dungdt/Library/Android/sdk/platform-tools && adb devices",
-    "android:devices:reverse": "cd /Users/dungdt/Library/Android/sdk/platform-tools && adb -s 80bdb0b4 reverse tcp:8081 tcp:8081",
+    "android:devices:reverse": "cd /Users/dungdt/Library/Android/sdk/platform-tools && adb -s emulator-5554 reverse tcp:8081 tcp:8081",
     "android:clean": "cd android && ./gradlew clean",
     "lint": "eslint .",
     "build-ios": "npx react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
   "dependencies": {
     "react": "18.1.0",
-    "react-native": "0.70.4"
+    "react-native": "0.70.4",
+    "react-native-animated-splash-screen": "^2.0.5",
+    "react-native-bootsplash": "^4.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
