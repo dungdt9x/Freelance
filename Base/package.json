@@ -3,11 +3,15 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
+    "android": "npx react-native run-android",
+    "ios": "npx react-native run-ios",
+    "start": "npx react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "android:devices": "cd /Users/dungdt/Library/Android/sdk/platform-tools && adb devices",
+    "android:devices:reverse": "cd /Users/dungdt/Library/Android/sdk/platform-tools && adb -s 80bdb0b4 reverse tcp:8081 tcp:8081",
+    "android:clean": "cd android && ./gradlew clean",
+    "lint": "eslint .",
+    "build-ios": "npx react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
   "dependencies": {
     "react": "18.1.0",
