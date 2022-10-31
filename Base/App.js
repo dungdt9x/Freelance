@@ -13,6 +13,7 @@ import RNBootSplash from 'react-native-bootsplash';
 import AnimatedSplash from 'react-native-animated-splash-screen';
 import {Appbar} from 'react-native-paper';
 import {Storages} from './src/constants/storages';
+import DeviceInfo from 'react-native-device-info';
 
 const HomeScreen = () => {
   return (
@@ -38,7 +39,7 @@ const App: () => Node = () => {
 
   useEffect(() => {
     console.log(Storages.getAllKeys());
-
+    console.log(DeviceInfo.getBundleId());
     setTimeout(() => {
       RNBootSplash.hide({fade: true}).then(() => {
         setReady(true);
