@@ -33,6 +33,7 @@
 		A0CBA45729101615002EBA9A /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0CBA44729101615002EBA9A /* EvilIcons.ttf */; };
 		A0CBA45829101615002EBA9A /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0CBA44829101615002EBA9A /* SimpleLineIcons.ttf */; };
 		A0CBA45929101615002EBA9A /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0CBA44929101615002EBA9A /* MaterialIcons.ttf */; };
+		A0D567DF291026AD00C9742B /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0D567DE291026AD00C9742B /* Template.swift */; };
 		A0EBCDB7290EECAD00297728 /* BootSplash.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A0EBCDB6290EECAD00297728 /* BootSplash.storyboard */; };
 		A7F3609288BB4814BAB6345B /* Roboto-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F02AE06EA4B64567AAC06EE8 /* Roboto-Medium.ttf */; };
 /* End PBXBuildFile section */
@@ -83,6 +84,8 @@
 		A0CBA44729101615002EBA9A /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = EvilIcons.ttf; sourceTree = "<group>"; };
 		A0CBA44829101615002EBA9A /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = SimpleLineIcons.ttf; sourceTree = "<group>"; };
 		A0CBA44929101615002EBA9A /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = MaterialIcons.ttf; sourceTree = "<group>"; };
+		A0D567DD291026AC00C9742B /* Base-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Base-Bridging-Header.h"; sourceTree = "<group>"; };
+		A0D567DE291026AD00C9742B /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		A0EBCDB6290EECAD00297728 /* BootSplash.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = BootSplash.storyboard; path = Base/BootSplash.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F02AE06EA4B64567AAC06EE8 /* Roboto-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Roboto-Medium.ttf"; path = "../src/assets/fonts/Roboto-Medium.ttf"; sourceTree = "<group>"; };
@@ -133,9 +136,11 @@
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
+				A0D567DE291026AD00C9742B /* Template.swift */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				A0D567DD291026AC00C9742B /* Base-Bridging-Header.h */,
 			);
 			name = Base;
 			sourceTree = "<group>";
@@ -287,7 +292,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1400;
 					};
 				};
 			};
@@ -513,6 +518,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0D567DF291026AD00C9742B /* Template.swift in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
@@ -533,6 +539,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-Base-BaseTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -560,6 +567,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-Base-BaseTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = BaseTests/Info.plist;
@@ -600,6 +608,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Base;
+				SWIFT_OBJC_BRIDGING_HEADER = "Base-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -625,6 +634,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Base;
+				SWIFT_OBJC_BRIDGING_HEADER = "Base-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

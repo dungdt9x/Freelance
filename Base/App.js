@@ -8,12 +8,20 @@
 
 import React, {useEffect, useState} from 'react';
 import type {Node} from 'react';
-import {SafeAreaView, StatusBar, View} from 'react-native';
+import {
+  SafeAreaView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import AnimatedSplash from 'react-native-animated-splash-screen';
 import {Appbar} from 'react-native-paper';
 import {Storages} from './src/constants/storages';
 import DeviceInfo from 'react-native-device-info';
+import Fonts from './src/constants/fonts';
+import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 
 const HomeScreen = () => {
   return (
@@ -29,7 +37,36 @@ const HomeScreen = () => {
         <Appbar.Action icon="magnify" onPress={() => {}} />
         <Appbar.Action icon="dots-vertical" onPress={() => {}} />
       </Appbar.Header>
-      <View />
+      <View>
+        <TouchableOpacity
+          style={{
+            paddingVertical: 12,
+            paddingHorizontal: 20,
+            backgroundColor: 'red',
+            alignSelf: 'center',
+            marginTop: 40,
+          }}
+          onPress={() => {
+            MultipleImagePicker.openPicker([
+              {
+                selectedAssets: [],
+                usedCameraButton: true,
+                mediaType: 'image',
+              },
+            ])
+              .then(response => {
+                console.log('Response: ', response);
+              })
+              .catch(error => {
+                console.log('Error: ', error);
+              });
+          }}>
+          <Text
+            style={{fontFamily: Fonts.Regular, color: 'white', fontSize: 13}}>
+            Open Image picker
+          </Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };

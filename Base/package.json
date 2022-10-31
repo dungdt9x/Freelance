@@ -14,6 +14,7 @@
     "build-ios": "npx react-native bundle --entry-file='index.js' --bundle-output='./ios/main.jsbundle' --dev=false --platform='ios'"
   },
   "dependencies": {
+    "@baronha/react-native-multiple-image-picker": "^0.4.13",
     "axios": "^1.1.3",
     "moment": "^2.29.4",
     "react": "18.1.0",

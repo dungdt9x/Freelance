@@ -317,6 +317,9 @@ PODS:
   - react-native-mmkv (2.5.1):
     - MMKV (>= 1.2.13)
     - React-Core
+  - react-native-multiple-image-picker (0.4.13):
+    - React-Core
+    - TLPhotoPicker (= 2.1.4)
   - React-perflogger (0.70.4)
   - React-RCTActionSheet (0.70.4):
     - React-Core/RCTActionSheetHeaders (= 0.70.4)
@@ -398,6 +401,7 @@ PODS:
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
   - SocketRocket (0.6.0)
+  - TLPhotoPicker (2.1.4)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -450,6 +454,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-mmkv (from `../node_modules/react-native-mmkv`)
+  - "react-native-multiple-image-picker (from `../node_modules/@baronha/react-native-multiple-image-picker`)"
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -488,6 +493,7 @@ SPEC REPOS:
     - SDWebImage
     - SDWebImageWebPCoder
     - SocketRocket
+    - TLPhotoPicker
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -535,6 +541,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-mmkv:
     :path: "../node_modules/react-native-mmkv"
+  react-native-multiple-image-picker:
+    :path: "../node_modules/@baronha/react-native-multiple-image-picker"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -607,6 +615,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 1d5a9e84e419a57cabc23249aec3d837d1b03a80
   React-logger: f8071ad48248781d5afdb8a07f778758529d3019
   react-native-mmkv: 69b9c003f10afdd01addf7c6ee784ce42ee2eff3
+  react-native-multiple-image-picker: ba2725d577e1da7fa83ce1b12a81d84107556240
   React-perflogger: 5e41b01b35d97cc1b0ea177181eb33b5c77623b6
   React-RCTActionSheet: 48949f30b24200c82f3dd27847513be34e06a3ae
   React-RCTAnimation: 96af42c97966fcd53ed9c31bee6f969c770312b6
@@ -625,6 +634,7 @@ SPEC CHECKSUMS:
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  TLPhotoPicker: f486e8499e1c3f464d0e886697635e25a72a52b8
   Yoga: 1f02ef4ce4469aefc36167138441b27d988282b1
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
