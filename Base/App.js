@@ -8,11 +8,11 @@
 
 import React, {useEffect, useState} from 'react';
 import type {Node} from 'react';
-import {SafeAreaView, StatusBar, Text, View} from 'react-native';
+import {SafeAreaView, StatusBar, View} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import AnimatedSplash from 'react-native-animated-splash-screen';
 import {Appbar} from 'react-native-paper';
-import Fonts from './src/constants/fonts';
+import {Storages} from './src/constants/storages';
 
 const HomeScreen = () => {
   return (
@@ -28,8 +28,7 @@ const HomeScreen = () => {
         <Appbar.Action icon="magnify" onPress={() => {}} />
         <Appbar.Action icon="dots-vertical" onPress={() => {}} />
       </Appbar.Header>
-      <View>
-      </View>
+      <View />
     </SafeAreaView>
   );
 };
@@ -38,6 +37,8 @@ const App: () => Node = () => {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    console.log(Storages.getAllKeys());
+
     setTimeout(() => {
       RNBootSplash.hide({fade: true}).then(() => {
         setReady(true);
