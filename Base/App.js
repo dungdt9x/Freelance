@@ -22,6 +22,7 @@ import {Storages} from './src/constants/storages';
 import DeviceInfo from 'react-native-device-info';
 import Fonts from './src/constants/fonts';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const HomeScreen = () => {
   return (
@@ -85,18 +86,20 @@ const App: () => Node = () => {
   }, []);
 
   return (
-    <AnimatedSplash
-      translucent={true}
-      isLoaded={ready}
-      logoImage={require('./src/assets/icons/sun.png')}
-      backgroundColor={'white'}
-      logoHeight={100}
-      logoWidth={100}>
-      <SafeAreaView style={'white'}>
-        <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
-        {HomeScreen()}
-      </SafeAreaView>
-    </AnimatedSplash>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <AnimatedSplash
+        translucent={true}
+        isLoaded={ready}
+        logoImage={require('./src/assets/icons/sun.png')}
+        backgroundColor={'white'}
+        logoHeight={100}
+        logoWidth={100}>
+        <SafeAreaView style={'white'}>
+          <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
+          {HomeScreen()}
+        </SafeAreaView>
+      </AnimatedSplash>
+    </GestureHandlerRootView>
   );
 };
 
