@@ -8,9 +8,24 @@
 
 import React, {useEffect, useState} from 'react';
 import type {Node} from 'react';
-import {SafeAreaView, StatusBar, Text, View} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import AnimatedSplash from 'react-native-animated-splash-screen';
+import {Appbar} from 'react-native-paper';
+
+const HomeScreen = () => {
+  return (
+    <SafeAreaView style={'white'}>
+      <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
+      <Appbar.Header style={{backgroundColor: 'white', elevation: 0}}>
+        <Appbar.BackAction onPress={() => {}} color={'red'} />
+        <Appbar.Content title="Title" subtitle="Subtitle" />
+        <Appbar.Action icon="magnify" onPress={() => {}} />
+        <Appbar.Action icon="dots-vertical" onPress={() => {}} />
+      </Appbar.Header>
+    </SafeAreaView>
+  );
+};
 
 const App: () => Node = () => {
   const [ready, setReady] = useState(false);
@@ -33,9 +48,7 @@ const App: () => Node = () => {
       logoWidth={100}>
       <SafeAreaView style={'white'}>
         <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
-        <View>
-          <Text style={{fontSize: 20, color: 'red'}}>Demo</Text>
-        </View>
+        {HomeScreen()}
       </SafeAreaView>
     </AnimatedSplash>
   );
