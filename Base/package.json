@@ -28,6 +28,7 @@
     "react-native-device-info": "^10.3.0",
     "react-native-fast-image": "^8.6.3",
     "react-native-gesture-handler": "^2.8.0",
+    "react-native-google-mobile-ads": "^8.2.1",
     "react-native-mmkv": "^2.5.1",
     "react-native-paper": "^4.12.5",
     "react-native-reanimated": "^2.12.0",

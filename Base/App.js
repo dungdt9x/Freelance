@@ -16,7 +16,13 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from './src/api/Authenticate';
 import {createStackNavigator} from '@react-navigation/stack';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import mobileAds, {
+  BannerAd,
+  BannerAdSize,
+  MaxAdContentRating,
+  TestIds,
+} from 'react-native-google-mobile-ads';
 
 const initializeState = {};
 const Stack = createStackNavigator();
@@ -68,45 +74,13 @@ const HomeStack = () => {
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Details" component={DetailsScreen} />
     </Stack.Navigator>
-    // <SafeAreaView style={'white'}>
-    //
-    //   <View>
-    //     <TouchableOpacity
-    //       style={{
-    //         paddingVertical: 12,
-    //         paddingHorizontal: 20,
-    //         backgroundColor: 'red',
-    //         alignSelf: 'center',
-    //         marginTop: 40,
-    //       }}
-    //       onPress={() => {
-    //         MultipleImagePicker.openPicker([
-    //           {
-    //             selectedAssets: [],
-    //             usedCameraButton: true,
-    //             mediaType: 'image',
-    //           },
-    //         ])
-    //           .then(response => {
-    //             console.log('Response: ', response);
-    //           })
-    //           .catch(error => {
-    //             console.log('Error: ', error);
-    //           });
-    //       }}>
-    //       <Text
-    //         style={{fontFamily: Fonts.Regular, color: 'white', fontSize: 13}}>
-    //         Open Image picker
-    //       </Text>
-    //     </TouchableOpacity>
-    //   </View>
-    // </SafeAreaView>
   );
 };
 
 const App: () => Node = () => {
   const [ready, setReady] = useState(false);
   const [state, dispatch] = useReducer(reducer, initializeState);
+
   useEffect(() => {
     setTimeout(() => {
       RNBootSplash.hide({fade: true}).then(() => {
@@ -126,11 +100,17 @@ const App: () => Node = () => {
           backgroundColor={'white'}
           logoHeight={100}
           logoWidth={100}>
-          {/*<SafeAreaView style={'white'}>*/}
-          {/*  <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />*/}
           {HomeStack()}
-          {/*</SafeAreaView>*/}
         </AnimatedSplash>
+        <View
+          style={{
+            position: 'absolute',
+            bottom: 0,
+            alignSelf: 'center',
+            justifyContent: 'center',
+          }}>
+          <BannerAd unitId={TestIds.BANNER} size={BannerAdSize.BANNER} />
+        </View>
       </NavigationContainer>
     </GestureHandlerRootView>
   );
