@@ -8,7 +8,7 @@
 
 import React, {useEffect, useReducer, useState} from 'react';
 import type {Node} from 'react';
-import {StatusBar, Text, View} from 'react-native';
+import {ActivityIndicator, Image, StatusBar, Text, View} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import AnimatedSplash from 'react-native-animated-splash-screen';
 import {Appbar} from 'react-native-paper';
@@ -16,16 +16,43 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from './src/api/Authenticate';
 import {createStackNavigator} from '@react-navigation/stack';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {Storages} from './src/constants/storages';
+import Cache from './src/commons/Cache';
 
-const initializeState = {};
+const viLocale = require('moment/locale/vi');
+const enLocale = require('moment/locale/es-us');
+
+const initializeState = {
+  user: Storages.getString('userInfo')
+    ? JSON.parse(Storages.getString('userInfo'))
+    : null,
+};
 const Stack = createStackNavigator();
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'A':
+    case 'LOGIN':
+      if (action.payload.user) {
+        Storages.set('userInfo', JSON.stringify(action.payload.user));
+      }
       return {
         ...state,
+        user: action.payload.user,
+      };
+    case 'REGISTER':
+      if (action.payload.user) {
+        Storages.set('userInfo', JSON.stringify(action.payload.user));
+      }
+      return {
+        ...state,
+        user: action.payload.user,
+      };
+    case 'LOGOUT':
+      Cache.clearCache();
+      return {
+        ...state,
+        user: null,
       };
     default:
       return state;
@@ -112,7 +139,7 @@ const App: () => Node = () => {
       RNBootSplash.hide({fade: true}).then(() => {
         setReady(true);
       });
-    }, 500);
+    }, 5000);
   }, []);
 
   return (
@@ -120,16 +147,32 @@ const App: () => Node = () => {
       <NavigationContainer>
         <AuthContext.Provider value={{state, dispatch}} />
         <AnimatedSplash
+          preload={true}
           translucent={true}
           isLoaded={ready}
-          logoImage={require('./src/assets/icons/sun.png')}
+          // logoImage={require('./src/assets/icons/sun.png')}
           backgroundColor={'white'}
-          logoHeight={100}
-          logoWidth={100}>
-          {/*<SafeAreaView style={'white'}>*/}
-          {/*  <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />*/}
+          // logoHeight={100}
+          // logoWidth={100}
+          customComponent={
+            <View
+              style={{
+                justifyContent: 'center',
+                alignSelf: 'center',
+                alignItems: 'center',
+              }}>
+              <Image
+                source={require('./src/assets/icons/sun.png')}
+                style={{width: 100, height: 100, tintColor: 'gray'}}
+              />
+              <ActivityIndicator
+                animating={true}
+                color={'gray'}
+                style={{marginTop: 20, alignSelf: 'center'}}
+              />
+            </View>
+          }>
           {HomeStack()}
-          {/*</SafeAreaView>*/}
         </AnimatedSplash>
       </NavigationContainer>
     </GestureHandlerRootView>
