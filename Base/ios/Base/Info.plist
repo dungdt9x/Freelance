@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Base</string>
+	<string>Smart Route</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -35,30 +35,26 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Access Camera Request</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>UILaunchStoryboardName</key>
-	<string>BootSplash.storyboard</string>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
-	<key>UISupportedInterfaceOrientations</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
+	<string>Access Location Request</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Access Microphone Request</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Access Photo Request</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Roboto-Bold.ttf</string>
 		<string>Roboto-Italic.ttf</string>
 		<string>Roboto-Medium.ttf</string>
+		<string>SVN-Poppins-Bold.ttf</string>
 		<string>Roboto-Regular.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
+		<string>SVN-Poppins-Regular.ttf</string>
+		<string>SVN-Poppins-Medium.ttf</string>
+		<string>SVN-Poppins-Italic.ttf</string>
 		<string>EvilIcons.ttf</string>
 		<string>Feather.ttf</string>
 		<string>FontAwesome.ttf</string>
@@ -74,11 +70,19 @@
 		<string>Zocial.ttf</string>
 		<string>Fontisto.ttf</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>Access Camera Request</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Access Microphone Request</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Access Photo Request</string>
+	<key>UILaunchStoryboardName</key>
+	<string>BootSplash.storyboard</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>

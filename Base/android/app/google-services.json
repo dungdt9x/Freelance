@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "351624121765",
+    "project_id": "smart-route-3c728",
+    "storage_bucket": "smart-route-3c728.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351624121765:android:f273b1345b3050d9382c4c",
+        "android_client_info": {
+          "package_name": "com.slogcom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "351624121765-nmk7aup5po6b1akkuako8uvrsmd3p8ei.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRyEbPKlABwkinCc6jA8ZAqqg4kT2ebjs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "351624121765-nmk7aup5po6b1akkuako8uvrsmd3p8ei.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "351624121765-ccutqgh4slrl017k9fnvsql2t2j943bj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.slogcom"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

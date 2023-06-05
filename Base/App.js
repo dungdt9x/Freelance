@@ -6,33 +6,36 @@
  * @flow strict-local
  */
 
-import React, {useEffect, useReducer, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import type {Node} from 'react';
-import {ActivityIndicator, Image, StatusBar, Text, View} from 'react-native';
+import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import AnimatedSplash from 'react-native-animated-splash-screen';
 import {Appbar} from 'react-native-paper';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {DefaultTheme, Provider as PaperProvider} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
-import {AuthContext} from './src/api/Authenticate';
+import {AuthContext} from './src/commons/Authenticate';
 import {createStackNavigator} from '@react-navigation/stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Storages} from './src/constants/storages';
+import {Storages} from './src/commons/Storages';
 import Cache from './src/commons/Cache';
-
-const viLocale = require('moment/locale/vi');
-const enLocale = require('moment/locale/es-us');
+import Keys from './src/constants/Keys';
+import SplashLoading from './src/Components/SplashLoading';
+import PreloadData from './src/commons/PreloadData';
+import Locale from './src/commons/Locale';
+import LoginScreen from './src/screen/Authorization/LoginScreen';
 
 const initializeState = {
-  user: Storages.getString('userInfo')
-    ? JSON.parse(Storages.getString('userInfo'))
+  user: Storages.getString(Keys.USER_INFO)
+    ? JSON.parse(Storages.getString(Keys.USER_INFO))
     : null,
 };
 const Stack = createStackNavigator();
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'LOGIN':
+    case Keys.LOGIN:
       if (action.payload.user) {
         Storages.set('userInfo', JSON.stringify(action.payload.user));
       }
@@ -40,7 +43,7 @@ const reducer = (state, action) => {
         ...state,
         user: action.payload.user,
       };
-    case 'REGISTER':
+    case Keys.REGISTER:
       if (action.payload.user) {
         Storages.set('userInfo', JSON.stringify(action.payload.user));
       }
@@ -48,7 +51,7 @@ const reducer = (state, action) => {
         ...state,
         user: action.payload.user,
       };
-    case 'LOGOUT':
+    case Keys.LOGOUT:
       Cache.clearCache();
       return {
         ...state,
@@ -95,88 +98,86 @@ const HomeStack = () => {
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Details" component={DetailsScreen} />
     </Stack.Navigator>
-    // <SafeAreaView style={'white'}>
-    //
-    //   <View>
-    //     <TouchableOpacity
-    //       style={{
-    //         paddingVertical: 12,
-    //         paddingHorizontal: 20,
-    //         backgroundColor: 'red',
-    //         alignSelf: 'center',
-    //         marginTop: 40,
-    //       }}
-    //       onPress={() => {
-    //         MultipleImagePicker.openPicker([
-    //           {
-    //             selectedAssets: [],
-    //             usedCameraButton: true,
-    //             mediaType: 'image',
-    //           },
-    //         ])
-    //           .then(response => {
-    //             console.log('Response: ', response);
-    //           })
-    //           .catch(error => {
-    //             console.log('Error: ', error);
-    //           });
-    //       }}>
-    //       <Text
-    //         style={{fontFamily: Fonts.Regular, color: 'white', fontSize: 13}}>
-    //         Open Image picker
-    //       </Text>
-    //     </TouchableOpacity>
-    //   </View>
-    // </SafeAreaView>
   );
 };
+
+const AuthenticateStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="LoginScreen"
+      screenOptions={{headerShown: false}}>
+      <Stack.Screen name="Home" component={LoginScreen} />
+    </Stack.Navigator>
+  );
+};
+
+Locale.updateAppLanguage();
 
 const App: () => Node = () => {
   const [ready, setReady] = useState(false);
   const [state, dispatch] = useReducer(reducer, initializeState);
+
   useEffect(() => {
-    setTimeout(() => {
-      RNBootSplash.hide({fade: true}).then(() => {
-        setReady(true);
+    loadData();
+  }, []);
+
+  const loadData = () => {
+    PreloadData.preloadData()
+      .then(() => {
+        setTimeout(() => {
+          RNBootSplash.hide({fade: true}).then(() => {
+            setReady(true);
+          });
+        }, 100);
+      })
+      .catch(() => {
+        setTimeout(() => {
+          RNBootSplash.hide({fade: true}).then(() => {
+            setReady(true);
+          });
+        }, 100);
       });
-    }, 5000);
+  };
+
+  const MainStacks = useMemo(() => {
+    if (!state) {
+      return AuthenticateStack();
+    }
+
+    if (!state.user) {
+      return AuthenticateStack();
+    }
+
+    return HomeStack();
+  }, [state]);
+
+  const renderSplashContent = useMemo(() => {
+    return <SplashLoading />;
   }, []);
 
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
-      <NavigationContainer>
-        <AuthContext.Provider value={{state, dispatch}} />
-        <AnimatedSplash
-          preload={true}
-          translucent={true}
-          isLoaded={ready}
-          // logoImage={require('./src/assets/icons/sun.png')}
-          backgroundColor={'white'}
-          // logoHeight={100}
-          // logoWidth={100}
-          customComponent={
-            <View
-              style={{
-                justifyContent: 'center',
-                alignSelf: 'center',
-                alignItems: 'center',
-              }}>
-              <Image
-                source={require('./src/assets/icons/sun.png')}
-                style={{width: 100, height: 100, tintColor: 'gray'}}
-              />
-              <ActivityIndicator
-                animating={true}
-                color={'gray'}
-                style={{marginTop: 20, alignSelf: 'center'}}
-              />
-            </View>
-          }>
-          {HomeStack()}
-        </AnimatedSplash>
-      </NavigationContainer>
+    <GestureHandlerRootView style={styles.container}>
+      <PaperProvider>
+        <NavigationContainer>
+          <AuthContext.Provider value={{state, dispatch}} />
+          <AnimatedSplash
+            preload={true}
+            translucent={true}
+            isLoaded={ready}
+            backgroundColor={'white'}
+            customComponent={renderSplashContent}>
+            {MainStacks}
+          </AnimatedSplash>
+        </NavigationContainer>
+      </PaperProvider>
     </GestureHandlerRootView>
   );
 };
 
 export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Base</string>
+    <string name="app_name">Smart Route</string>
+    <string name="default_notification_channel_id">com.slogcom</string>
 </resources>
