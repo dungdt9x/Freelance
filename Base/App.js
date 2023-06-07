@@ -8,21 +8,17 @@
 
 import React, {useEffect, useReducer, useState} from 'react';
 import type {Node} from 'react';
-import {StatusBar, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import AnimatedSplash from 'react-native-animated-splash-screen';
-import {Appbar} from 'react-native-paper';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from './src/api/Authenticate';
 import {createStackNavigator} from '@react-navigation/stack';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import mobileAds, {
-  BannerAd,
-  BannerAdSize,
-  MaxAdContentRating,
-  TestIds,
-} from 'react-native-google-mobile-ads';
+import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
+import images from './src/constants/images';
+import Home from './src/screen/Home';
+import Detail from './src/screen/Detail';
 
 const initializeState = {};
 const Stack = createStackNavigator();
@@ -38,41 +34,13 @@ const reducer = (state, action) => {
   }
 };
 
-function HomeScreen() {
-  const insets = useSafeAreaInsets();
-  return (
-    <View style={{flex: 1, backgroundColor: 'white', paddingTop: insets.top}}>
-      <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
-      <Appbar.Header
-        style={{
-          backgroundColor: 'white',
-          elevation: 0,
-        }}>
-        <Appbar.BackAction onPress={() => {}} color={'red'} />
-        <Appbar.Content title="Title" subtitle="Subtitle" />
-        <Appbar.Action icon="magnify" onPress={() => {}} />
-        <Appbar.Action icon="dots-vertical" onPress={() => {}} />
-      </Appbar.Header>
-      <Text>Home Screen</Text>
-    </View>
-  );
-}
-
-function DetailsScreen() {
-  return (
-    <View>
-      <Text>Details Screen</Text>
-    </View>
-  );
-}
-
 const HomeStack = () => {
   return (
     <Stack.Navigator
       initialRouteName="Home"
       screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Details" component={DetailsScreen} />
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Details" component={Detail} />
     </Stack.Navigator>
   );
 };
@@ -90,25 +58,19 @@ const App: () => Node = () => {
   }, []);
 
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
+    <GestureHandlerRootView style={styles.rootView}>
       <NavigationContainer>
         <AuthContext.Provider value={{state, dispatch}} />
         <AnimatedSplash
           translucent={true}
           isLoaded={ready}
-          logoImage={require('./src/assets/icons/sun.png')}
+          logoImage={images.sun}
           backgroundColor={'white'}
-          logoHeight={100}
-          logoWidth={100}>
+          logoHeight={120}
+          logoWidth={120}>
           {HomeStack()}
         </AnimatedSplash>
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            alignSelf: 'center',
-            justifyContent: 'center',
-          }}>
+        <View style={styles.bannerView}>
           <BannerAd unitId={TestIds.BANNER} size={BannerAdSize.BANNER} />
         </View>
       </NavigationContainer>
@@ -117,3 +79,13 @@ const App: () => Node = () => {
 };
 
 export default App;
+
+const styles = StyleSheet.create({
+  rootView: {flex: 1},
+  bannerView: {
+    position: 'absolute',
+    bottom: 0,
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+});
