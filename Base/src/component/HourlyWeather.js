@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import Loading from './Loading';
 import Api from '../api/Api';
@@ -10,6 +10,8 @@ import device from '../constants/device';
 import Lottie from 'lottie-react-native';
 import helper from '../ultity/helper';
 import {Button, TouchableRipple} from 'react-native-paper';
+import strings from "../constants/strings";
+import { Modalize } from "react-native-modalize";
 
 const HourlyWeather = location => {
   const [data, setData] = useState(null);
@@ -18,6 +20,7 @@ const HourlyWeather = location => {
   const [weekly, setWeekly] = useState([]);
   const [currentDateSelect, setCurrentDateSelect] = useState(null);
   const [currentDateSelectData, setCurrentDateSelectData] = useState([]);
+  let modalRef = useRef(null);
 
   useEffect(() => {
     if (location) {
@@ -142,7 +145,7 @@ const HourlyWeather = location => {
                 color: colors.black,
                 fontSize: 16,
               }}>
-              Today
+              {strings.toDay}
             </Text>
             <ScrollView
               horizontal={true}
@@ -198,7 +201,7 @@ const HourlyWeather = location => {
                   color: colors.black,
                   fontSize: 16,
                 }}>
-                Other
+                {strings.other}
               </Text>
               <Button
                 style={{alignSelf: 'flex-start'}}
@@ -214,11 +217,11 @@ const HourlyWeather = location => {
               horizontal={true}
               style={{marginTop: 12, marginBottom: 12, alignSelf: 'center'}}>
               {currentDateSelectData.map((d, index) => {
-                let object = helper.getIconAndTextFromDataWeather(d);
                 return (
                   <TouchableRipple
                     key={index.toString()}
                     onPress={() => {
+                      modalRef.current?.show();
                       // if (d.isSelect) {
                       //   currentDateSelectData[index].isSelect = false;
                       //   setCurrentDateSelectData([...currentDateSelectData]);
@@ -324,6 +327,11 @@ const HourlyWeather = location => {
         paddingVertical: 12,
       }}>
       {renderContent()}
+      <Modalize ref={modalRef}>
+        <View style={{width: device.width, height: device.height/2, backgroundColor: 'red'}}>
+
+        </View>
+      </Modalize>
     </View>
   );
 };

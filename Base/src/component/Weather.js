@@ -11,6 +11,7 @@ import device from '../constants/device';
 import {IconButton} from 'react-native-paper';
 import images from '../constants/images';
 import _ from 'lodash';
+import strings from "../constants/strings";
 
 const Weather = location => {
   const [weather, setWeather] = useState(null);
@@ -32,7 +33,7 @@ const Weather = location => {
           {weather.main.temp.toFixed(0)}°c
         </Text>
         <Text style={styles.temperatureLikeText}>
-          {`Feel like ${weather.main.feels_like.toFixed(0)}°c`}
+          {`${strings.feelLike} ${weather.main.feels_like.toFixed(0)}°c`}
         </Text>
         <Lottie source={images.wind} autoPlay loop style={styles.windIcon} />
       </View>
@@ -72,7 +73,6 @@ const Weather = location => {
   };
 
   const renderContent = () => {
-    console.log(weather);
     return (
       <View style={styles.mainContent}>
         <View style={styles.content}>
@@ -114,7 +114,7 @@ const Weather = location => {
                     fontFamily: fonts.Regular,
                     color: colors.black,
                   }}>
-                  Air quality
+                  {strings.airQuality}
                 </Text>
               </View>
               <View
@@ -139,7 +139,7 @@ const Weather = location => {
                         fontFamily: fonts.Regular,
                         color: colors.gray,
                       }}>
-                      Atmospheric
+                      {strings.atmospheric}
                     </Text>
                     <Text
                       style={{
@@ -170,7 +170,7 @@ const Weather = location => {
                         fontFamily: fonts.Regular,
                         color: colors.gray,
                       }}>
-                      Humidity
+                      {strings.humidity}
                     </Text>
                     <Text
                       style={{
@@ -201,7 +201,7 @@ const Weather = location => {
                         fontFamily: fonts.Regular,
                         color: colors.gray,
                       }}>
-                      Cloudiness
+                      {strings.cloudiness}
                     </Text>
                     <Text
                       style={{
@@ -242,7 +242,7 @@ const Weather = location => {
                         fontFamily: fonts.Regular,
                         color: colors.gray,
                       }}>
-                      Wind speed
+                      {strings.winSpeed}
                     </Text>
                     <Text
                       style={{
@@ -273,7 +273,7 @@ const Weather = location => {
                         fontFamily: fonts.Regular,
                         color: colors.gray,
                       }}>
-                      Wind direction
+                      {strings.windDirection}
                     </Text>
                     <Text
                       style={{
@@ -300,7 +300,7 @@ const Weather = location => {
                         fontFamily: fonts.Regular,
                         color: colors.gray,
                       }}>
-                      Wind gust
+                      {strings.windGust}
                     </Text>
                     <Text
                       style={{
