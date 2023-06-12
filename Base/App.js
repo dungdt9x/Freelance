@@ -16,11 +16,12 @@ import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from './src/api/Authenticate';
 import {createStackNavigator} from '@react-navigation/stack';
 import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
+import {Host} from 'react-native-portalize';
 import images from './src/constants/images';
 import Home from './src/screen/Home';
-import Detail from './src/screen/Detail';
 import device from './src/constants/device';
 import strings from './src/constants/strings';
+import Search from './src/screen/Search';
 
 const viLocale = require('moment/locale/vi');
 const enLocale = require('moment/locale/es-us');
@@ -69,7 +70,7 @@ const HomeStack = () => {
       initialRouteName="Home"
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Details" component={Detail} />
+      <Stack.Screen name="Search" component={Search} />
     </Stack.Navigator>
   );
 };
@@ -89,19 +90,22 @@ const App: () => Node = () => {
   return (
     <GestureHandlerRootView style={styles.rootView}>
       <NavigationContainer>
-        <AuthContext.Provider value={{state, dispatch}} />
-        <AnimatedSplash
-          translucent={true}
-          isLoaded={ready}
-          logoImage={images.sun}
-          backgroundColor={'white'}
-          logoHeight={120}
-          logoWidth={120}>
-          {HomeStack()}
-        </AnimatedSplash>
-        <View style={styles.bannerView}>
-          <BannerAd unitId={TestIds.BANNER} size={BannerAdSize.BANNER} />
-        </View>
+        <Host>
+          <AuthContext.Provider value={{state, dispatch}}>
+            <AnimatedSplash
+              translucent={true}
+              isLoaded={ready}
+              logoImage={images.sun}
+              backgroundColor={'white'}
+              logoHeight={120}
+              logoWidth={120}>
+              {HomeStack()}
+            </AnimatedSplash>
+            <View style={styles.bannerView}>
+              <BannerAd unitId={TestIds.BANNER} size={BannerAdSize.BANNER} />
+            </View>
+          </AuthContext.Provider>
+        </Host>
       </NavigationContainer>
     </GestureHandlerRootView>
   );

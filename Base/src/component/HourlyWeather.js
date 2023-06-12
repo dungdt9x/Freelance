@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {ScrollView, Text, View} from 'react-native';
 import Loading from './Loading';
 import Api from '../api/Api';
 import fonts from '../constants/fonts';
@@ -10,8 +10,11 @@ import device from '../constants/device';
 import Lottie from 'lottie-react-native';
 import helper from '../ultity/helper';
 import {Button, TouchableRipple} from 'react-native-paper';
-import strings from "../constants/strings";
-import { Modalize } from "react-native-modalize";
+import strings from '../constants/strings';
+import {Modalize} from 'react-native-modalize';
+import {Portal} from 'react-native-portalize';
+import SmallWeather from './SmallWeather';
+import Calendar from './Calendar';
 
 const HourlyWeather = location => {
   const [data, setData] = useState(null);
@@ -20,7 +23,10 @@ const HourlyWeather = location => {
   const [weekly, setWeekly] = useState([]);
   const [currentDateSelect, setCurrentDateSelect] = useState(null);
   const [currentDateSelectData, setCurrentDateSelectData] = useState([]);
+  const [arrayDateOther, setArrayDateOther] = useState([]);
   let modalRef = useRef(null);
+  let calendarRef = useRef(null);
+  const [selectedWeather, setSelectedWeather] = useState(null);
 
   useEffect(() => {
     if (location) {
@@ -49,6 +55,14 @@ const HourlyWeather = location => {
       }
       let tomorrow = date.setDate(date.getDate() + 1);
       setCurrentDateSelect(moment(tomorrow).local().format('YYYY-MM-DD'));
+      let array = [];
+      for (let i = 1; i < 6; i++) {
+        let newDate = new Date();
+        let day = newDate.setDate(newDate.getDate() + i);
+        let stringValue = moment(day).local().format('YYYY-MM-DD');
+        array.push(stringValue);
+      }
+      setArrayDateOther(array);
     }
   }, [data]);
 
@@ -155,16 +169,10 @@ const HourlyWeather = location => {
                   <TouchableRipple
                     key={index.toString()}
                     onPress={() => {
-                      // if (d.isSelect) {
-                      //   daily[index].isSelect = false;
-                      //   setDaily([...daily]);
-                      //   return;
-                      // }
-                      // daily.forEach(d => {
-                      //   d.isSelect = false;
-                      // });
-                      // daily[index].isSelect = true;
-                      // setDaily([...daily]);
+                      setSelectedWeather(d);
+                      setTimeout(() => {
+                        modalRef.current?.open();
+                      }, 100);
                     }}
                     rippleColor="rgba(0, 0, 0, 0.1)"
                     borderless={true}
@@ -207,10 +215,12 @@ const HourlyWeather = location => {
                 style={{alignSelf: 'flex-start'}}
                 icon="calendar-cursor"
                 mode="elevated"
-                onPress={() => console.log('Pressed')}>
+                onPress={() => {
+                  calendarRef.current?.open();
+                }}>
                 {moment(new Date(currentDateSelect))
                   .local()
-                  .format('DD/MM/YYYY')}
+                  .format('dddd, DD/MM/YYYY')}
               </Button>
             </View>
             <ScrollView
@@ -221,17 +231,10 @@ const HourlyWeather = location => {
                   <TouchableRipple
                     key={index.toString()}
                     onPress={() => {
-                      modalRef.current?.show();
-                      // if (d.isSelect) {
-                      //   currentDateSelectData[index].isSelect = false;
-                      //   setCurrentDateSelectData([...currentDateSelectData]);
-                      //   return;
-                      // }
-                      // currentDateSelectData.forEach(d => {
-                      //   d.isSelect = false;
-                      // });
-                      // currentDateSelectData[index].isSelect = true;
-                      // setCurrentDateSelectData([...currentDateSelectData]);
+                      setSelectedWeather(d);
+                      setTimeout(() => {
+                        modalRef.current?.open();
+                      }, 100);
                     }}
                     rippleColor="rgba(0, 0, 0, 0.1)"
                     borderless={true}
@@ -270,9 +273,7 @@ const HourlyWeather = location => {
             color: d.isSelect ? colors.white : colors.gray,
             textAlign: 'center',
           }}>
-          {moment(new Date(currentDateSelect))
-            .local()
-            .format('ddd')}
+          {moment(new Date(currentDateSelect)).local().format('ddd')}
         </Text>
         <Text
           style={{
@@ -327,11 +328,42 @@ const HourlyWeather = location => {
         paddingVertical: 12,
       }}>
       {renderContent()}
-      <Modalize ref={modalRef}>
-        <View style={{width: device.width, height: device.height/2, backgroundColor: 'red'}}>
-
-        </View>
-      </Modalize>
+      <Portal>
+        <Modalize
+          handlePosition={'inside'}
+          ref={modalRef}
+          adjustToContentHeight={true}
+          scrollViewProps={{
+            keyboardShouldPersistTaps: 'handle',
+          }}>
+          <View style={{height: device.height * 0.58}}>
+            <SmallWeather weather={selectedWeather} />
+          </View>
+        </Modalize>
+      </Portal>
+      <Portal>
+        <Modalize
+          handlePosition={'inside'}
+          ref={calendarRef}
+          adjustToContentHeight={true}
+          scrollViewProps={{
+            keyboardShouldPersistTaps: 'handle',
+          }}>
+          <View style={{height: 280}}>
+            <Calendar
+              onSelect={(date) => {
+                calendarRef.current?.close();
+                console.log(date);
+                if (date) {
+                  setCurrentDateSelect(date);
+                }
+              }}
+              array={arrayDateOther}
+              currentDate={currentDateSelect}
+            />
+          </View>
+        </Modalize>
+      </Portal>
     </View>
   );
 };

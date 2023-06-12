@@ -1,6 +1,6 @@
 const keys = {
   weatherAPIKey: '984d3b584719e6a048931fb09082613a',
-  googleMapAPIKey: 'AIzaSyA1ZkXRGhfCFsyR7I6_HVmqg63ir81sHZY',
+  googleMapAPIKey: 'AIzaSyDTBpN6GF2yCrwMs6DfVPcY7R6YpOEN6Vg',
 };
 
 export default keys;

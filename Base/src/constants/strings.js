@@ -1,6 +1,9 @@
 import LocalizedStrings from 'react-localization';
 const Strings = new LocalizedStrings({
   en: {
+    search: 'Search',
+    enterLocation: 'Change location',
+    selectDate: 'Select other date',
     permissionDeniedTitle: 'Access to Location Denied',
     permissionDeniedSubTitle:
       'Weather needs access to your location to retrieve accurate weather information for your current area',
@@ -28,11 +31,14 @@ const Strings = new LocalizedStrings({
     atmospheric: 'Áp suất',
     humidity: 'Độ ẩm',
     cloudiness: 'Độ mây',
-    winSpeed: 'Tốc độ gió',
+    windSpeed: 'Tốc độ gió',
     windDirection: 'Hướng gió',
     windGust: 'Gió mạnh',
     toDay: 'Hôm nay',
     other: 'Ngày khác',
+    selectDate: 'Chọn ngày khác',
+    search: 'Tìm kiếm',
+    enterLocation: 'Thay đổi địa điểm',
   },
 });
 

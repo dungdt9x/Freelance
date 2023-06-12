@@ -1,6 +1,13 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {StatusBar, Text, View, StyleSheet, ScrollView} from 'react-native';
+import {
+  StatusBar,
+  Text,
+  View,
+  StyleSheet,
+  ScrollView,
+  DeviceEventEmitter,
+} from 'react-native';
 import {Appbar, Button, IconButton} from 'react-native-paper';
 import colors from '../constants/colors';
 import fonts from '../constants/fonts';
@@ -20,9 +27,9 @@ import strings from '../constants/strings';
 import Place from '../component/Place';
 import device from '../constants/device';
 import Weather from '../component/Weather';
-import HourlyWeather from "../component/HourlyWeather";
+import HourlyWeather from '../component/HourlyWeather';
 
-const Home = () => {
+const Home = ({navigation}) => {
   const insets = useSafeAreaInsets();
   const lastLocation = JSON.parse(Storages.getString('lastLocation') ?? '{}');
   const [currentLocation, setCurrentLocation] = useState(lastLocation);
@@ -34,6 +41,20 @@ const Home = () => {
       checkAndRequestPermission();
     }
   }, [currentLocation]);
+
+  useEffect(() => {
+    let listenEvent = DeviceEventEmitter.addListener(
+      'updateLocation',
+      value => {
+        if (value) {
+          setCurrentLocation(value);
+        }
+      },
+    );
+    return () => {
+      listenEvent.remove();
+    };
+  }, []);
 
   const checkAndRequestPermission = () => {
     if (device.iOS) {
@@ -85,6 +106,7 @@ const Home = () => {
     })
       .then(location => {
         setCurrentLocation(location);
+        Storages.set('lastLocation', JSON.stringify(location));
       })
       .catch(error => {
         const {code, message} = error;
@@ -107,7 +129,12 @@ const Home = () => {
               />
               <Place location={currentLocation} />
             </View>
-            <Appbar.Action icon="magnify" onPress={() => {}} />
+            <Appbar.Action
+              icon="magnify"
+              onPress={() => {
+                navigation.push('Search');
+              }}
+            />
           </View>
         </Appbar.Header>
       </View>
