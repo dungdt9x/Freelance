@@ -1,38 +1,98 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {
-  StatusBar,
-  Text,
-  View,
-  StyleSheet,
-  ScrollView,
-  Platform,
-} from 'react-native';
-import {Appbar, Button, IconButton, TouchableRipple} from 'react-native-paper';
+import {StatusBar, Text, View, StyleSheet, ScrollView} from 'react-native';
+import {Appbar, Button, IconButton} from 'react-native-paper';
 import colors from '../constants/colors';
-import moment from 'moment';
 import fonts from '../constants/fonts';
-import {check, PERMISSIONS, request} from 'react-native-permissions';
+import {
+  check,
+  PERMISSIONS,
+  request,
+  RESULTS,
+  openSettings,
+} from 'react-native-permissions';
+import GetLocation from 'react-native-get-location';
+import {Storages} from '../constants/storages';
+import _ from 'lodash';
+import Lottie from 'lottie-react-native';
+import images from '../constants/images';
+import strings from '../constants/strings';
+import Place from '../component/Place';
+import device from '../constants/device';
+import Weather from '../component/Weather';
+import HourlyWeather from "../component/HourlyWeather";
 
 const Home = () => {
   const insets = useSafeAreaInsets();
-
+  const lastLocation = JSON.parse(Storages.getString('lastLocation') ?? '{}');
+  const [currentLocation, setCurrentLocation] = useState(lastLocation);
+  const [blocked, setBlocked] = useState(
+    _.isEmpty(lastLocation) ? null : false,
+  );
   useEffect(() => {
-    if (Platform.OS === 'ios') {
+    if (_.isEmpty(currentLocation)) {
+      checkAndRequestPermission();
+    }
+  }, [currentLocation]);
+
+  const checkAndRequestPermission = () => {
+    if (device.iOS) {
       check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then(result => {
-        console.log('RESULT: ', result);
+        switch (result) {
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
+            getCurrentLocation();
+            break;
+          default:
+            request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then(response => {
+              if (response === RESULTS.GRANTED) {
+                getCurrentLocation();
+              } else {
+                setBlocked(true);
+              }
+            });
+            break;
+        }
       });
     } else {
-      check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then(result => {});
+      check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then(result => {
+        switch (result) {
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
+            getCurrentLocation();
+            break;
+          default:
+            request(PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION).then(
+              response => {
+                if (response === RESULTS.GRANTED) {
+                  getCurrentLocation();
+                } else {
+                  setBlocked(true);
+                }
+              },
+            );
+            break;
+        }
+      });
     }
+  };
 
-    // request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then(result => {
-    //   console.log('DDDD: ', result);
-    //   // …
-    // });
-  }, []);
+  const getCurrentLocation = () => {
+    setBlocked(false);
+    GetLocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 60000,
+    })
+      .then(location => {
+        setCurrentLocation(location);
+      })
+      .catch(error => {
+        const {code, message} = error;
+        console.warn(code, message);
+      });
+  };
 
-  const renderHeader = () => {
+  const renderHeader = useMemo(() => {
     return (
       <View>
         <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
@@ -45,31 +105,68 @@ const Home = () => {
                 size={25}
                 onPress={() => console.log('Pressed')}
               />
-              <View>
-                <Text style={styles.locationHeaderText}>Ha Noi</Text>
-                <Text style={styles.timeHeaderText}>
-                  {moment(new Date()).local().format('dddd, DD MMMM YYYY')}
-                </Text>
-              </View>
+              <Place location={currentLocation} />
             </View>
             <Appbar.Action icon="magnify" onPress={() => {}} />
           </View>
         </Appbar.Header>
       </View>
     );
-  };
+  }, [lastLocation]);
 
   const renderContent = () => {
     return (
       <ScrollView>
-        <View />
+        <View style={styles.content}>{renderData}</View>
       </ScrollView>
     );
   };
 
+  const renderData = useMemo(() => {
+    if (blocked === null) {
+      return (
+        <View style={styles.blockStyle}>
+          <Lottie
+            source={images.location}
+            autoPlay
+            loop
+            style={styles.locationIcon}
+          />
+        </View>
+      );
+    }
+    if (blocked) {
+      return (
+        <View style={styles.blockStyle}>
+          <Lottie source={images.sad} autoPlay loop style={styles.iconBlock} />
+          <Text style={styles.titleBlock}>{strings.permissionDeniedTitle}</Text>
+          <Text style={styles.subTitleBlock}>
+            {strings.permissionDeniedSubTitle}
+          </Text>
+          <Button
+            icon="cog"
+            mode="contained"
+            style={styles.buttonSetting}
+            labelStyle={styles.buttonTitle}
+            onPress={() => {
+              openSettings().catch(() => console.warn('cannot open settings'));
+            }}>
+            {strings.openSettings}
+          </Button>
+        </View>
+      );
+    }
+    return (
+      <View style={{paddingBottom: 80}}>
+        <Weather location={currentLocation} />
+        <HourlyWeather location={currentLocation} />
+      </View>
+    );
+  }, [blocked, currentLocation]);
+
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
-      {renderHeader()}
+      {renderHeader}
       {renderContent()}
     </View>
   );
@@ -95,14 +192,39 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  locationHeaderText: {
-    fontSize: 18,
-    fontFamily: fonts.Medium,
-    color: colors.black,
+  content: {flex: 1},
+  blockStyle: {
+    width: device.width,
+    height: 300,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginTop: 100,
   },
-  timeHeaderText: {
-    fontSize: 13,
+  iconBlock: {width: 120, height: 120, alignSelf: 'center'},
+  titleBlock: {fontFamily: fonts.Medium, color: colors.red, fontSize: 15},
+  subTitleBlock: {
     fontFamily: fonts.Regular,
-    color: colors.gray,
+    color: colors.orange,
+    fontSize: 12,
+    textAlign: 'center',
+    marginHorizontal: 24,
+    marginTop: 8,
+  },
+  buttonSetting: {
+    backgroundColor: colors.gray,
+    borderRadius: 50,
+    marginTop: 50,
+  },
+  buttonTitle: {
+    fontFamily: fonts.Regular,
+    color: colors.white,
+    fontSize: 13,
+    textTransform: 'none',
+  },
+  locationIcon: {
+    width: 200,
+    height: 200,
+    alignSelf: 'center',
   },
 });

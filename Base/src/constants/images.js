@@ -1,5 +1,26 @@
 const images = {
   sun: require('../assets/icons/sun.png'),
+  map: require('../assets/json/map.json'),
+  wind: require('../assets/json/wind.json'),
+  spinning: require('../assets/json/spinning-paper.json'),
+  sad: require('../assets/json/sad.json'),
+  location: require('../assets/json/location.json'),
+  d01: require('../assets/json/01d.json'),
+  n01: require('../assets/json/01n.json'),
+  d02: require('../assets/json/02d.json'),
+  n02: require('../assets/json/02n.json'),
+  d03: require('../assets/json/03d.json'),
+  n03: require('../assets/json/03n.json'),
+  d04: require('../assets/json/04d.json'),
+  n04: require('../assets/json/04n.json'),
+  d09: require('../assets/json/09d.json'),
+  d10: require('../assets/json/10d.json'),
+  n10: require('../assets/json/10n.json'),
+  d11: require('../assets/json/11d.json'),
+  n11: require('../assets/json/11n.json'),
+  d13: require('../assets/json/13d.json'),
+  n13: require('../assets/json/13n.json'),
+  dn: require('../assets/json/nd.json'),
 };
 
 export default images;

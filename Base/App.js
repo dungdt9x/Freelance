@@ -8,7 +8,7 @@
 
 import React, {useEffect, useReducer, useState} from 'react';
 import type {Node} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {NativeModules, StyleSheet, View} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import AnimatedSplash from 'react-native-animated-splash-screen';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -19,16 +19,45 @@ import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
 import images from './src/constants/images';
 import Home from './src/screen/Home';
 import Detail from './src/screen/Detail';
+import device from './src/constants/device';
+import strings from './src/constants/strings';
+
+const viLocale = require('moment/locale/vi');
+const enLocale = require('moment/locale/es-us');
+const frLocale = require('moment/locale/fr');
 
 const initializeState = {};
 const Stack = createStackNavigator();
 
+const configMomentLocale = language => {
+  const moment = require('moment');
+  if (language === 'vi') {
+    moment.updateLocale('vi', viLocale);
+  } else if (language === 'fr') {
+    moment.updateLocale('fr', frLocale);
+  } else {
+    moment.updateLocale('en', enLocale);
+  }
+};
+
+const deviceLanguage = device.iOS
+  ? NativeModules.SettingsManager.settings.AppleLocale ||
+    NativeModules.SettingsManager.settings.AppleLanguages[0]
+  : NativeModules.I18nManager.localeIdentifier;
+
+if (deviceLanguage.includes('fr')) {
+  strings.setLanguage('fr');
+  configMomentLocale('fr');
+} else if (deviceLanguage.includes('vi')) {
+  strings.setLanguage('vi');
+  configMomentLocale('vi');
+} else {
+  strings.setLanguage('en');
+  configMomentLocale('en');
+}
+
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'A':
-      return {
-        ...state,
-      };
     default:
       return state;
   }
