@@ -28,6 +28,16 @@ import Place from '../component/Place';
 import device from '../constants/device';
 import Weather from '../component/Weather';
 import HourlyWeather from '../component/HourlyWeather';
+import {AdEventType, InterstitialAd} from 'react-native-google-mobile-ads';
+import keys from '../constants/keys';
+
+const interstitial = InterstitialAd.createForAdRequest(
+  device.iOS ? keys.iOS_FEATURE_OPEN_ID : keys.FEATURE_OPEN_ID,
+  {
+    requestNonPersonalizedAdsOnly: true,
+    keywords: keys.adKeys,
+  },
+);
 
 const Home = ({navigation}) => {
   const insets = useSafeAreaInsets();
@@ -36,6 +46,13 @@ const Home = ({navigation}) => {
   const [blocked, setBlocked] = useState(
     _.isEmpty(lastLocation) ? null : false,
   );
+
+  useEffect(() => {
+    return interstitial.addAdEventListener(AdEventType.LOADED, () => {
+      interstitial.show().then();
+    });
+  }, []);
+
   useEffect(() => {
     if (_.isEmpty(currentLocation)) {
       checkAndRequestPermission();
@@ -125,13 +142,17 @@ const Home = ({navigation}) => {
                 icon="map-marker-radius"
                 color={colors.red}
                 size={25}
-                onPress={() => console.log('Pressed')}
+                onPress={() => {
+                  interstitial.load();
+                  navigation.push('Search');
+                }}
               />
               <Place location={currentLocation} />
             </View>
             <Appbar.Action
               icon="magnify"
               onPress={() => {
+                interstitial.load();
                 navigation.push('Search');
               }}
             />

@@ -15,13 +15,19 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from './src/api/Authenticate';
 import {createStackNavigator} from '@react-navigation/stack';
-import {BannerAd, BannerAdSize, TestIds} from 'react-native-google-mobile-ads';
+import {
+  AdEventType,
+  AppOpenAd,
+  BannerAd,
+  BannerAdSize,
+} from 'react-native-google-mobile-ads';
 import {Host} from 'react-native-portalize';
 import images from './src/constants/images';
 import Home from './src/screen/Home';
 import device from './src/constants/device';
 import strings from './src/constants/strings';
 import Search from './src/screen/Search';
+import keys from './src/constants/keys';
 
 const viLocale = require('moment/locale/vi');
 const enLocale = require('moment/locale/es-us');
@@ -79,17 +85,35 @@ const App: () => Node = () => {
   const [ready, setReady] = useState(false);
   const [state, dispatch] = useReducer(reducer, initializeState);
 
+  const appOpenAd = AppOpenAd.createForAdRequest(
+    device.iOS ? keys.iOS_OPEN_ID : keys.APP_OPEN_ID,
+    {
+      requestNonPersonalizedAdsOnly: true,
+      keywords: keys.adKeys,
+    },
+  );
+
   useEffect(() => {
-    setTimeout(() => {
-      RNBootSplash.hide({fade: true}).then(() => {
-        setReady(true);
-      });
-    }, 500);
+    const unsubscribeLoaded = appOpenAd.addAdEventListener(
+      AdEventType.LOADED,
+      () => {
+        appOpenAd.show().then();
+      },
+    );
+    return () => {
+      unsubscribeLoaded();
+    };
   }, []);
 
   return (
     <GestureHandlerRootView style={styles.rootView}>
-      <NavigationContainer>
+      <NavigationContainer
+        onReady={() => {
+          RNBootSplash.hide({fade: true}).then(() => {
+            setReady(true);
+          });
+          appOpenAd.load();
+        }}>
         <Host>
           <AuthContext.Provider value={{state, dispatch}}>
             <AnimatedSplash
@@ -102,7 +126,14 @@ const App: () => Node = () => {
               {HomeStack()}
             </AnimatedSplash>
             <View style={styles.bannerView}>
-              <BannerAd unitId={TestIds.BANNER} size={BannerAdSize.BANNER} />
+              <BannerAd
+                unitId={device.iOS ? keys.iOS_BANNER_ID : keys.BANNER_ID}
+                size={BannerAdSize.BANNER}
+                requestOptions={{
+                  requestNonPersonalizedAdsOnly: true,
+                  keywords: keys.adKeys,
+                }}
+              />
             </View>
           </AuthContext.Provider>
         </Host>

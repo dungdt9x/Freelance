@@ -1,16 +1,17 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import { StatusBar, Text, View, StyleSheet, DeviceEventEmitter } from "react-native";
-import {Appbar, IconButton, Searchbar} from 'react-native-paper';
+import {StatusBar, View, StyleSheet, DeviceEventEmitter} from 'react-native';
+import {Appbar, IconButton} from 'react-native-paper';
 import fonts from '../constants/fonts';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import strings from '../constants/strings';
 import keys from '../constants/keys';
 import colors from '../constants/colors';
-import { Storages } from "../constants/storages";
+import {Storages} from '../constants/storages';
 
 const Search = ({navigation}) => {
   const insets = useSafeAreaInsets();
+
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
       <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
@@ -77,7 +78,6 @@ const Search = ({navigation}) => {
             } else {
               navigation.pop();
             }
-            // DeviceEventEmitter.emit('changeLocation', value);
           }}
         />
       </View>
