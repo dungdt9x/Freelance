@@ -6,8 +6,8 @@ const Strings = new LocalizedStrings({
     selectDate: 'Select other date',
     permissionDeniedTitle: 'Access to Location Denied',
     permissionDeniedSubTitle:
-      'Weather needs access to your location to retrieve accurate weather information for your current area',
-    openSettings: 'Open Settings',
+      'Weather can not detect your location. Please add your location by click Search button',
+    openSettings: 'Add location',
     updating: 'Updating',
     feelLike: 'Feel like',
     airQuality: 'Air quality',
@@ -25,8 +25,8 @@ const Strings = new LocalizedStrings({
     feelLike: 'Cảm giác như',
     permissionDeniedTitle: 'Quyền truy cập vị trí bị từ chối',
     permissionDeniedSubTitle:
-      'Weather cần truy cập vào vị trí của bạn để lấy được thông tin thời tiết chính xác cho khu vực hiện tại của bạn',
-    openSettings: 'Mở cài đặt',
+      'Weather không thể xác định vị trí của bạn. Vui lòng thêm địa điểm của bạn bằng cách nhấn vào nút Search',
+    openSettings: 'Thêm địa điểm',
     updating: 'Đang cập nhật',
     atmospheric: 'Áp suất',
     humidity: 'Độ ẩm',

@@ -6,8 +6,9 @@ import {
   StyleSheet,
   ScrollView,
   DeviceEventEmitter,
+  Text,
 } from 'react-native';
-import {Appbar, IconButton} from 'react-native-paper';
+import {Appbar, IconButton, Button} from 'react-native-paper';
 import colors from '../constants/colors';
 import fonts from '../constants/fonts';
 import {Storages} from '../constants/storages';
@@ -21,6 +22,7 @@ import HourlyWeather from '../component/HourlyWeather';
 import {AdEventType, InterstitialAd} from 'react-native-google-mobile-ads';
 import keys from '../constants/keys';
 import Api from '../api/Api';
+import strings from "../constants/strings";
 
 const interstitial = InterstitialAd.createForAdRequest(
   device.iOS ? keys.iOS_FEATURE_OPEN_ID : keys.FEATURE_OPEN_ID,
@@ -72,15 +74,9 @@ const Home = ({navigation}) => {
           };
           setCurrentLocation(location);
           Storages.set('lastLocation', JSON.stringify(location));
-        } else {
-          setCurrentLocation(keys.hanoi);
-          Storages.set('lastLocation', JSON.stringify(keys.hanoi));
         }
       })
-      .catch(() => {
-        setCurrentLocation(keys.hanoi);
-        Storages.set('lastLocation', JSON.stringify(keys.hanoi));
-      });
+      .catch(() => {});
   };
 
   const renderHeader = useMemo(() => {
@@ -134,6 +130,20 @@ const Home = ({navigation}) => {
             loop
             style={styles.locationIcon}
           />
+          <Text style={styles.subTitleBlock}>
+            {strings.permissionDeniedSubTitle}
+          </Text>
+          <Button
+            icon="map-search-outline"
+            mode="contained"
+            style={styles.buttonSetting}
+            labelStyle={styles.buttonTitle}
+            onPress={() => {
+              interstitial.load();
+              navigation.push('Search');
+            }}>
+            {strings.openSettings}
+          </Button>
         </View>
       );
     }
@@ -187,16 +197,18 @@ const styles = StyleSheet.create({
   titleBlock: {fontFamily: fonts.Medium, color: colors.red, fontSize: 15},
   subTitleBlock: {
     fontFamily: fonts.Regular,
-    color: colors.orange,
-    fontSize: 12,
+    color: colors.bluePurple,
+    fontSize: 14,
     textAlign: 'center',
     marginHorizontal: 24,
     marginTop: 8,
   },
   buttonSetting: {
-    backgroundColor: colors.gray,
+    backgroundColor: colors.lightPurple,
     borderRadius: 50,
     marginTop: 50,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
   },
   buttonTitle: {
     fontFamily: fonts.Regular,
