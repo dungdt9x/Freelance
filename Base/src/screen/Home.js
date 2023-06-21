@@ -2,34 +2,25 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {
   StatusBar,
-  Text,
   View,
   StyleSheet,
   ScrollView,
   DeviceEventEmitter,
 } from 'react-native';
-import {Appbar, Button, IconButton} from 'react-native-paper';
+import {Appbar, IconButton} from 'react-native-paper';
 import colors from '../constants/colors';
 import fonts from '../constants/fonts';
-import {
-  check,
-  PERMISSIONS,
-  request,
-  RESULTS,
-  openSettings,
-} from 'react-native-permissions';
-import GetLocation from 'react-native-get-location';
 import {Storages} from '../constants/storages';
 import _ from 'lodash';
 import Lottie from 'lottie-react-native';
 import images from '../constants/images';
-import strings from '../constants/strings';
 import Place from '../component/Place';
 import device from '../constants/device';
 import Weather from '../component/Weather';
 import HourlyWeather from '../component/HourlyWeather';
 import {AdEventType, InterstitialAd} from 'react-native-google-mobile-ads';
 import keys from '../constants/keys';
+import Api from '../api/Api';
 
 const interstitial = InterstitialAd.createForAdRequest(
   device.iOS ? keys.iOS_FEATURE_OPEN_ID : keys.FEATURE_OPEN_ID,
@@ -43,9 +34,6 @@ const Home = ({navigation}) => {
   const insets = useSafeAreaInsets();
   const lastLocation = JSON.parse(Storages.getString('lastLocation') ?? '{}');
   const [currentLocation, setCurrentLocation] = useState(lastLocation);
-  const [blocked, setBlocked] = useState(
-    _.isEmpty(lastLocation) ? null : false,
-  );
 
   useEffect(() => {
     return interstitial.addAdEventListener(AdEventType.LOADED, () => {
@@ -55,7 +43,7 @@ const Home = ({navigation}) => {
 
   useEffect(() => {
     if (_.isEmpty(currentLocation)) {
-      checkAndRequestPermission();
+      getCurrentLocation();
     }
   }, [currentLocation]);
 
@@ -73,61 +61,25 @@ const Home = ({navigation}) => {
     };
   }, []);
 
-  const checkAndRequestPermission = () => {
-    if (device.iOS) {
-      check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then(result => {
-        switch (result) {
-          case RESULTS.GRANTED:
-            console.log('The permission is granted');
-            getCurrentLocation();
-            break;
-          default:
-            request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then(response => {
-              if (response === RESULTS.GRANTED) {
-                getCurrentLocation();
-              } else {
-                setBlocked(true);
-              }
-            });
-            break;
-        }
-      });
-    } else {
-      check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then(result => {
-        switch (result) {
-          case RESULTS.GRANTED:
-            console.log('The permission is granted');
-            getCurrentLocation();
-            break;
-          default:
-            request(PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION).then(
-              response => {
-                if (response === RESULTS.GRANTED) {
-                  getCurrentLocation();
-                } else {
-                  setBlocked(true);
-                }
-              },
-            );
-            break;
-        }
-      });
-    }
-  };
-
   const getCurrentLocation = () => {
-    setBlocked(false);
-    GetLocation.getCurrentPosition({
-      enableHighAccuracy: true,
-      timeout: 60000,
-    })
-      .then(location => {
-        setCurrentLocation(location);
-        Storages.set('lastLocation', JSON.stringify(location));
+    Api.getLocationFromIP()
+      .then(response => {
+        let {result, success} = response.data;
+        if (result && success) {
+          let location = {
+            latitude: result.latitude,
+            longitude: result.longitude,
+          };
+          setCurrentLocation(location);
+          Storages.set('lastLocation', JSON.stringify(location));
+        } else {
+          setCurrentLocation(keys.hanoi);
+          Storages.set('lastLocation', JSON.stringify(keys.hanoi));
+        }
       })
-      .catch(error => {
-        const {code, message} = error;
-        console.warn(code, message);
+      .catch(() => {
+        setCurrentLocation(keys.hanoi);
+        Storages.set('lastLocation', JSON.stringify(keys.hanoi));
       });
   };
 
@@ -160,18 +112,20 @@ const Home = ({navigation}) => {
         </Appbar.Header>
       </View>
     );
-  }, [lastLocation]);
+  }, [currentLocation, navigation]);
 
   const renderContent = () => {
     return (
-      <ScrollView>
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}>
         <View style={styles.content}>{renderData}</View>
       </ScrollView>
     );
   };
 
   const renderData = useMemo(() => {
-    if (blocked === null) {
+    if (_.isEmpty(currentLocation)) {
       return (
         <View style={styles.blockStyle}>
           <Lottie
@@ -183,34 +137,13 @@ const Home = ({navigation}) => {
         </View>
       );
     }
-    if (blocked) {
-      return (
-        <View style={styles.blockStyle}>
-          <Lottie source={images.sad} autoPlay loop style={styles.iconBlock} />
-          <Text style={styles.titleBlock}>{strings.permissionDeniedTitle}</Text>
-          <Text style={styles.subTitleBlock}>
-            {strings.permissionDeniedSubTitle}
-          </Text>
-          <Button
-            icon="cog"
-            mode="contained"
-            style={styles.buttonSetting}
-            labelStyle={styles.buttonTitle}
-            onPress={() => {
-              openSettings().catch(() => console.warn('cannot open settings'));
-            }}>
-            {strings.openSettings}
-          </Button>
-        </View>
-      );
-    }
     return (
-      <View style={{paddingBottom: 80}}>
+      <View style={styles.contentView}>
         <Weather location={currentLocation} />
         <HourlyWeather location={currentLocation} />
       </View>
     );
-  }, [blocked, currentLocation]);
+  }, [currentLocation]);
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
@@ -241,6 +174,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   content: {flex: 1},
+  contentView: {paddingBottom: 80},
   blockStyle: {
     width: device.width,
     height: 300,

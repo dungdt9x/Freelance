@@ -61,6 +61,7 @@ const keys = {
     'video editor',
     'telegram',
   ],
+  hanoi: {latitude: 21.0245, longitude: 105.8412},
 };
 
 export default keys;

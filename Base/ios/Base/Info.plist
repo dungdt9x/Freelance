@@ -38,7 +38,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Access Camera Request</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Weather requires access to your current location in order to provide accurate weather data tailored to your specific location</string>
+	<string>Access Location Request</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Access Microphone Request</string>
 	<key>NSPhotoLibraryUsageDescription</key>

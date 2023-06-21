@@ -43,6 +43,9 @@ class Api {
       `/geocode/json?address=${lat},${lon}&key=${keys.googleMapAPIKey}`,
     );
   }
+  static getLocationFromIP() {
+    return BaseAPI.AXIOS.get('api/mobile/setting/getIpInfo');
+  }
 }
 
 export default Api;

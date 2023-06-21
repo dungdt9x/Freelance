@@ -162,6 +162,8 @@ const HourlyWeather = location => {
               {strings.toDay}
             </Text>
             <ScrollView
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
               horizontal={true}
               style={{marginTop: 12, marginBottom: 12, alignSelf: 'center'}}>
               {daily.map((d, index) => {
@@ -224,6 +226,8 @@ const HourlyWeather = location => {
               </Button>
             </View>
             <ScrollView
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
               horizontal={true}
               style={{marginTop: 12, marginBottom: 12, alignSelf: 'center'}}>
               {currentDateSelectData.map((d, index) => {
@@ -351,9 +355,8 @@ const HourlyWeather = location => {
           }}>
           <View style={{height: 280}}>
             <Calendar
-              onSelect={(date) => {
+              onSelect={date => {
                 calendarRef.current?.close();
-                console.log(date);
                 if (date) {
                   setCurrentDateSelect(date);
                 }

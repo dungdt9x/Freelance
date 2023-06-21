@@ -11,7 +11,7 @@ import device from '../constants/device';
 import {IconButton} from 'react-native-paper';
 import images from '../constants/images';
 import _ from 'lodash';
-import strings from "../constants/strings";
+import strings from '../constants/strings';
 
 const Weather = location => {
   const [weather, setWeather] = useState(null);
@@ -344,13 +344,9 @@ const Weather = location => {
   const renderLoading = () => {
     return (
       <View>
-        <View style={styles.content}>
-          <Loading />
-        </View>
+        <Loading />
         <View style={styles.spacer} />
-        <View style={styles.content}>
-          <Loading />
-        </View>
+        <Loading />
       </View>
     );
   };
