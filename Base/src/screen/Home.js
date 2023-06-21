@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   contentView: {paddingBottom: 80},
   blockStyle: {
     width: device.width,
-    height: 300,
+    height: device.height / 2 > 300 ? device.height / 2 : 300,
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
