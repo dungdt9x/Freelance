@@ -22,7 +22,7 @@ import HourlyWeather from '../component/HourlyWeather';
 import {AdEventType, InterstitialAd} from 'react-native-google-mobile-ads';
 import keys from '../constants/keys';
 import Api from '../api/Api';
-import strings from "../constants/strings";
+import strings from '../constants/strings';
 
 const interstitial = InterstitialAd.createForAdRequest(
   device.iOS ? keys.iOS_FEATURE_OPEN_ID : keys.FEATURE_OPEN_ID,
@@ -153,7 +153,7 @@ const Home = ({navigation}) => {
         <HourlyWeather location={currentLocation} />
       </View>
     );
-  }, [currentLocation]);
+  }, [currentLocation, navigation]);
 
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
