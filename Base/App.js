@@ -103,7 +103,7 @@ const App: () => Node = () => {
     return () => {
       unsubscribeLoaded();
     };
-  }, []);
+  }, [appOpenAd]);
 
   return (
     <GestureHandlerRootView style={styles.rootView}>

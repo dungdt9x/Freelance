@@ -611,8 +611,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Base/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Weather;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
+				INFOPLIST_KEY_CFBundleDisplayName = ePhoto;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -623,7 +623,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hsmart.photo;
 				PRODUCT_NAME = Weather;
 				SWIFT_OBJC_BRIDGING_HEADER = "Base-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -640,8 +640,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = Base/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Weather;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
+				INFOPLIST_KEY_CFBundleDisplayName = ePhoto;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.photography";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -652,7 +652,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hsmart.photo;
 				PRODUCT_NAME = Weather;
 				SWIFT_OBJC_BRIDGING_HEADER = "Base-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

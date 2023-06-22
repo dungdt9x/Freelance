@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "npx react-native run-android --appId com.hsmart.weather",
+    "android": "npx react-native run-android --appId com.hsmart.photo",
     "ios": "npx react-native run-ios",
     "start": "npx react-native start",
     "test": "jest",
