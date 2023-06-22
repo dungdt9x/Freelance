@@ -766,10 +766,15 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@baronha/react-native-multiple-image-picker@^0.4.13":
-  version "0.4.13"
-  resolved "https://registry.yarnpkg.com/@baronha/react-native-multiple-image-picker/-/react-native-multiple-image-picker-0.4.13.tgz#b86f6f6d26884f7708f70dba0b0f674294810806"
-  integrity sha512-/jzT5oJgLpQUJWfoRuLYwxy5ajL5Iz+H2wB6exJz6hcAIIfQclIxisLtGdvpYrXtXvUSrjLSZJ0Hyo9my63NcA==
+"@baronha/react-native-multiple-image-picker@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@baronha/react-native-multiple-image-picker/-/react-native-multiple-image-picker-1.0.0.tgz#047b3069cec6fd62fe97bfdc3c678d51c9be2ef3"
+  integrity sha512-ayOm4H7sLV4lThLUHWgIT6LO9ljro1yv7WUDsKKKU1shMjWQM4SfeGP4VOLLUqQXJC13YN9RdtpzkpVk4Ahg4w==
+
+"@baronha/react-native-photo-editor@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@baronha/react-native-photo-editor/-/react-native-photo-editor-1.1.6.tgz#ac9648c388a74d8f9ca95edcb8d3d6a1bb324092"
+  integrity sha512-Dfcv+bR83PU5PK/LUKxoI0mX4tK1vSMfE4D+ycuVgupbeZItnrwNjI3Ton4RETv4Kv2aZkUtpihh+CBdV7PWTg==
 
 "@bcoe/v8-coverage@^0.2.3":
   version "0.2.3"
@@ -813,6 +818,11 @@
     js-yaml "^3.13.1"
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
+
+"@georstat/react-native-image-gallery@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@georstat/react-native-image-gallery/-/react-native-image-gallery-1.1.0.tgz#85ec40cec9415f372c950a5d88e26c7123de3cc8"
+  integrity sha512-rRyZpEFWQXUAlzQqaMi3/r3ymFUKqoQd+Jx1BevUEurMcPAX5321x8BbJ0jo1j4JfWR/koZDwyRZgoitEO5QTA==
 
 "@gorhom/bottom-sheet@^4":
   version "4.4.5"
@@ -6240,6 +6250,11 @@ react-native-network-info@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/react-native-network-info/-/react-native-network-info-5.2.1.tgz#b701f10d4ed1aeadcfe77b197328d1ae846f6d3a"
   integrity sha512-iam74xXtrSqqZurCl1/bSjZ9jXcsJY84g7brx1/4uVGCY26c6m+4CArHNSHOsz5ATg2NQT+81sjNy0KlCPyK4g==
+
+react-native-onboard@^2.5.12:
+  version "2.5.12"
+  resolved "https://registry.yarnpkg.com/react-native-onboard/-/react-native-onboard-2.5.12.tgz#8ca72a1f7fb1446068db77dd236b5a1dddee0626"
+  integrity sha512-uxS58PYyU+FuwKrpAr7fvfXDpf76K4cTBS+xzfhvvYAW1SfeRea7bHufGuqlsSDGy5PJblTNZ/UIeCdkWyaQIA==
 
 react-native-paper@^4.12.5:
   version "4.12.5"

@@ -26,6 +26,9 @@ target 'Base' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  pod 'SDWebImage', :modular_headers => true
+  pod 'SDWebImageWebPCoder', :modular_headers => true
+
   target 'BaseTests' do
     inherit! :complete
     # Pods for testing
