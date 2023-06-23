@@ -28,7 +28,7 @@
     "moment": "^2.29.4",
     "react": "18.1.0",
     "react-localization": "^1.0.19",
-    "react-native": "0.70.4",
+    "react-native": "0.70.5",
     "react-native-actionsheet": "^2.4.2",
     "react-native-animated-splash-screen": "^2.0.5",
     "react-native-bootsplash": "^4.3.2",
