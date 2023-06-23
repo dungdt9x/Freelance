@@ -1,8 +1,8 @@
 {
   "name": "Base",
-  "displayName": "Weather",
+  "displayName": "ePhoto",
   "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-6965877094704282~8744503371",
-    "ios_app_id": "ca-app-pub-6965877094704282~4731771012"
+    "android_app_id": "ca-app-pub-6965877094704282~2759265679",
+    "ios_app_id": "ca-app-pub-6965877094704282~2759265679"
   }
 }
