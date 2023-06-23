@@ -17,8 +17,6 @@ import {openPicker} from '@baronha/react-native-multiple-image-picker';
 import PhotoEditor from '@baronha/react-native-photo-editor';
 import MasonryList from '@react-native-seoul/masonry-list';
 import uuid from 'react-native-uuid';
-import {CacheManager} from '@georstat/react-native-image-cache';
-import {Dirs} from 'react-native-file-access';
 import {ImageGallery} from '@georstat/react-native-image-gallery';
 import ActionSheet from 'react-native-actionsheet';
 
@@ -29,13 +27,6 @@ const interstitial = InterstitialAd.createForAdRequest(
     keywords: keys.adKeys,
   },
 );
-
-CacheManager.config = {
-  baseDir: `${Dirs.CacheDir}/images_cache/`,
-  blurRadius: 15,
-  sourceAnimationDuration: 1000,
-  thumbnailAnimationDuration: 1000,
-};
 
 const Home = ({navigation}) => {
   const insets = useSafeAreaInsets();

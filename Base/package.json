@@ -16,7 +16,6 @@
   "dependencies": {
     "@baronha/react-native-multiple-image-picker": "^1.0.0",
     "@baronha/react-native-photo-editor": "^1.1.6",
-    "@georstat/react-native-image-cache": "^2.5.0",
     "@georstat/react-native-image-gallery": "^1.1.0",
     "@gorhom/bottom-sheet": "^4",
     "@react-native-seoul/masonry-list": "^1.4.2",
@@ -34,8 +33,6 @@
     "react-native-bootsplash": "^4.3.2",
     "react-native-device-info": "^10.3.0",
     "react-native-fast-image": "^8.6.3",
-    "react-native-file-access": "^3.0.4",
-    "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.8.0",
     "react-native-google-mobile-ads": "^8.2.1",
     "react-native-google-places-autocomplete": "^2.5.1",
