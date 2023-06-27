@@ -7,6 +7,7 @@ const keys = {
   iOS_OPEN_ID: 'ca-app-pub-6965877094704282/4752006219',
   iOS_BANNER_ID: 'ca-app-pub-6965877094704282/1004332893',
   iOS_FEATURE_OPEN_ID: 'ca-app-pub-6965877094704282/3450478935',
+  BONUS_ID: 'ca-app-pub-6965877094704282~2759265679',
   adKeys: [
     'fashion',
     'clothing',

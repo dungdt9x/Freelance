@@ -78,6 +78,20 @@ const Home = ({navigation}) => {
               ePhoto
             </Text>
           </View>
+          <Appbar.Action
+            icon="chat-alert"
+            color={colors.red}
+            onPress={() => {
+              Alert.alert(strings.helping, strings.helpingMsg, [
+                {
+                  text: 'OK',
+                  onPress: () => {
+                    interstitial.load();
+                  },
+                },
+              ]);
+            }}
+          />
         </Appbar.Header>
       </View>
     );
@@ -373,7 +387,13 @@ const Home = ({navigation}) => {
       />
       <ActionSheet
         ref={actionSheet}
-        options={[strings.share, strings.save, strings.edit, strings.delete]}
+        options={[
+          strings.share,
+          strings.save,
+          strings.edit,
+          strings.delete,
+          strings.close,
+        ]}
         destructiveButtonIndex={3}
         onPress={index => {
           switch (index) {

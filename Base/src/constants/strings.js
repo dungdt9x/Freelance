@@ -1,6 +1,9 @@
 import LocalizedStrings from 'react-localization';
 const Strings = new LocalizedStrings({
   en: {
+    helping: 'Help me!',
+    helpingMsg:
+      'By supporting me through watching ads and installing the software featured in those ads, you contribute to the financial sustainability of my app, enabling me to enhance its quality further.',
     share: 'Share',
     edit: 'Edit',
     save: 'Save to device',
@@ -120,6 +123,9 @@ const Strings = new LocalizedStrings({
     edit: 'Sửa',
     save: 'Lưu vào thiết bị',
     delete: 'Xoá',
+    helping: 'Giúp đỡ tôi!',
+    helpingMsg:
+      'Bạn có thể giúp đỡ tôi bằng cách click vào quảng cáo và cài đặt những phần mềm mà quảng cáo có hiển thị để giúp tôi có kinh phí duy trì và cải thiện chất lượng của app trong tương lai.',
     featureUpcoming:
       'Chức năng đang được hoàn thiện và sẽ ra mắt sớm nhất! Vui lòng đợi nha!',
     tut3Subtitle2:
