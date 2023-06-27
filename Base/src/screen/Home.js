@@ -318,14 +318,13 @@ const Home = ({navigation}) => {
             color={colors.white}
             onPress={() => {
               closeGallery();
-              Alert.alert(strings.upcoming, strings.featureUpcoming, [
-                {
-                  text: 'OK',
-                  onPress: () => {
-                    interstitial.load();
-                  },
-                },
-              ]);
+              interstitial.load();
+              setTimeout(() => {
+                console.log('Image: ', image);
+                if (image && image.url) {
+                  editPhoto(image.url);
+                }
+              }, 200);
             }}
           />
           <IconButton
@@ -401,7 +400,7 @@ const Home = ({navigation}) => {
               }, 200);
               break;
             case 2:
-              // interstitial.load();
+              interstitial.load();
               setTimeout(() => {
                 let image = dataRef.current[currentIndexRef.current];
                 console.log('Image: ', image);
