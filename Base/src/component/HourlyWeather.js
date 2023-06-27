@@ -16,7 +16,7 @@ import {Portal} from 'react-native-portalize';
 import SmallWeather from './SmallWeather';
 import Calendar from './Calendar';
 
-const HourlyWeather = location => {
+const HourlyWeather = ({location, onSelect}) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [daily, setDaily] = useState([]);
@@ -171,6 +171,9 @@ const HourlyWeather = location => {
                   <TouchableRipple
                     key={index.toString()}
                     onPress={() => {
+                      if (onSelect) {
+                        onSelect();
+                      }
                       setSelectedWeather(d);
                       setTimeout(() => {
                         modalRef.current?.open();
@@ -218,6 +221,9 @@ const HourlyWeather = location => {
                 icon="calendar-cursor"
                 mode="elevated"
                 onPress={() => {
+                  if (onSelect) {
+                    onSelect();
+                  }
                   calendarRef.current?.open();
                 }}>
                 {moment(new Date(currentDateSelect))
@@ -235,6 +241,9 @@ const HourlyWeather = location => {
                   <TouchableRipple
                     key={index.toString()}
                     onPress={() => {
+                      if (onSelect) {
+                        onSelect();
+                      }
                       setSelectedWeather(d);
                       setTimeout(() => {
                         modalRef.current?.open();

@@ -150,7 +150,12 @@ const Home = ({navigation}) => {
     return (
       <View style={styles.contentView}>
         <Weather location={currentLocation} />
-        <HourlyWeather location={currentLocation} />
+        <HourlyWeather
+          location={currentLocation}
+          onSelect={() => {
+            interstitial.load();
+          }}
+        />
       </View>
     );
   }, [currentLocation, navigation]);
