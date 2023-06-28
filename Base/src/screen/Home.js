@@ -82,14 +82,7 @@ const Home = ({navigation}) => {
             icon="chat-alert"
             color={colors.red}
             onPress={() => {
-              Alert.alert(strings.helping, strings.helpingMsg, [
-                {
-                  text: 'OK',
-                  onPress: () => {
-                    interstitial.load();
-                  },
-                },
-              ]);
+              Alert.alert(strings.helping, strings.helpingMsg);
             }}
           />
         </Appbar.Header>
@@ -131,23 +124,46 @@ const Home = ({navigation}) => {
     }
   };
 
-  const editPhoto = url => {
-    console.log('URL: ', url);
+  const editPhoto = (url, id) => {
     PhotoEditor.open({
       path: url,
       stickers: [],
     })
       .then(result => {
         console.log('result: ', result);
-        dataRef.current?.push({
-          id: uuid.v4(),
-          imgURL: result,
-          url: result,
-          uri: result,
-          randomBool: Math.random() < 0.5,
-        });
-        Storages.set('saved', JSON.stringify([...dataRef.current]));
-        setData([...dataRef.current]);
+        if (id) {
+          let findIndex = dataRef.current.findIndex(d => d && d.id === id);
+          if (findIndex >= 0) {
+            dataRef.current[findIndex] = {
+              ...dataRef.current[findIndex],
+              imgURL: result,
+              url: result,
+              uri: result,
+            };
+            Storages.set('saved', JSON.stringify([...dataRef.current]));
+            setData([...dataRef.current]);
+          } else {
+            dataRef.current?.push({
+              id: uuid.v4(),
+              imgURL: result,
+              url: result,
+              uri: result,
+              randomBool: Math.random() < 0.5,
+            });
+            Storages.set('saved', JSON.stringify([...dataRef.current]));
+            setData([...dataRef.current]);
+          }
+        } else {
+          dataRef.current?.push({
+            id: uuid.v4(),
+            imgURL: result,
+            url: result,
+            uri: result,
+            randomBool: Math.random() < 0.5,
+          });
+          Storages.set('saved', JSON.stringify([...dataRef.current]));
+          setData([...dataRef.current]);
+        }
       })
       .catch(error => {
         console.log('Error: ', error);
@@ -300,14 +316,7 @@ const Home = ({navigation}) => {
             color={colors.white}
             onPress={() => {
               closeGallery();
-              Alert.alert(strings.upcoming, strings.featureUpcoming, [
-                {
-                  text: 'OK',
-                  onPress: () => {
-                    interstitial.load();
-                  },
-                },
-              ]);
+              Alert.alert(strings.upcoming, strings.featureUpcoming);
             }}
           />
           <IconButton
@@ -316,14 +325,7 @@ const Home = ({navigation}) => {
             color={colors.white}
             onPress={() => {
               closeGallery();
-              Alert.alert(strings.upcoming, strings.featureUpcoming, [
-                {
-                  text: 'OK',
-                  onPress: () => {
-                    interstitial.load();
-                  },
-                },
-              ]);
+              Alert.alert(strings.upcoming, strings.featureUpcoming);
             }}
           />
           <IconButton
@@ -336,7 +338,7 @@ const Home = ({navigation}) => {
               setTimeout(() => {
                 console.log('Image: ', image);
                 if (image && image.url) {
-                  editPhoto(image.url);
+                  editPhoto(image.url, image.id);
                 }
               }, 200);
             }}
@@ -398,34 +400,19 @@ const Home = ({navigation}) => {
         onPress={index => {
           switch (index) {
             case 0:
-              Alert.alert(strings.upcoming, strings.featureUpcoming, [
-                {
-                  text: 'OK',
-                  onPress: () => {
-                    interstitial.load();
-                  },
-                },
-              ]);
+              Alert.alert(strings.upcoming, strings.featureUpcoming);
               break;
             case 1:
               setTimeout(() => {
-                Alert.alert(strings.upcoming, strings.featureUpcoming, [
-                  {
-                    text: 'OK',
-                    onPress: () => {
-                      interstitial.load();
-                    },
-                  },
-                ]);
+                Alert.alert(strings.upcoming, strings.featureUpcoming);
               }, 200);
               break;
             case 2:
               interstitial.load();
               setTimeout(() => {
                 let image = dataRef.current[currentIndexRef.current];
-                console.log('Image: ', image);
                 if (image && image.url) {
-                  editPhoto(image.url);
+                  editPhoto(image.url, image.id);
                 }
               }, 200);
               break;
@@ -438,12 +425,8 @@ const Home = ({navigation}) => {
                 setData(newData);
                 Storages.set('saved', JSON.stringify([...newData]));
               }
-              setTimeout(() => {
-                interstitial.load();
-              }, 500);
               break;
             default:
-              interstitial.load();
               break;
           }
         }}
