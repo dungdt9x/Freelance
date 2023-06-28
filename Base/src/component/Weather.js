@@ -324,11 +324,16 @@ const Weather = location => {
   // wind.gust
 
   const getWeatherWithLocation = value => {
-    if (!value || !value.location || _.isEmpty(value.location)) {
+    if (!value) {
       return;
     }
+    let {latitude, longitude} = value;
+    if (value.location) {
+      latitude = value.location.latitude;
+      longitude = value.location.longitude;
+    }
 
-    Api.getCurrentWeather(value.location.latitude, value.location.longitude)
+    Api.getCurrentWeather(latitude, longitude)
       .then(response => {
         let result = response.data;
         if (result) {

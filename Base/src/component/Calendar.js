@@ -19,6 +19,7 @@ const Calendar = ({array, onSelect, currentDate}) => {
         borderless={true}
         style={{
           height: 50,
+          width: (device.width - 40) / 2,
           backgroundColor:
             currentDate === item ? colors.lightPurple : colors.lightGray2,
           marginHorizontal: 4,

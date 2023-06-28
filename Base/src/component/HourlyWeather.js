@@ -81,10 +81,15 @@ const HourlyWeather = ({location, onSelect}) => {
   }, [currentDateSelect, weekly]);
 
   const getDataHourlyWithLocation = value => {
-    if (!value || !value.location || _.isEmpty(value.location)) {
+    if (!value) {
       return;
     }
-    Api.getWeatherDaily(value.location.latitude, value.location.longitude)
+    let {latitude, longitude} = value;
+    if (value.location) {
+      latitude = value.location.latitude;
+      longitude = value.location.longitude;
+    }
+    Api.getWeatherDaily(latitude, longitude)
       .then(response => {
         if (response.data.list) {
           setData(response.data.list);

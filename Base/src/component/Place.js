@@ -13,7 +13,7 @@ import {
 } from 'rn-placeholder';
 import strings from '../constants/strings';
 
-const Place = location => {
+const Place = ({location}) => {
   const [loading, setLoading] = useState(true);
   const [address, setAddress] = useState(null);
 
@@ -27,14 +27,14 @@ const Place = location => {
     if (!value) {
       return;
     }
-    if (!value.location) {
-      return;
+
+    let {latitude, longitude} = value;
+    if (value.location) {
+      latitude = value.location.latitude;
+      longitude = value.location.longitude;
     }
 
-    Api.getAddressFromLocation(
-      value.location.latitude,
-      value.location.longitude,
-    )
+    Api.getAddressFromLocation(latitude, longitude)
       .then(response => {
         let {results} = response.data;
         if (results) {
