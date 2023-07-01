@@ -24,13 +24,10 @@ import keys from '../constants/keys';
 import Api from '../api/Api';
 import strings from '../constants/strings';
 
-const interstitial = InterstitialAd.createForAdRequest(
-  device.iOS ? keys.iOS_FEATURE_OPEN_ID : keys.FEATURE_OPEN_ID,
-  {
-    requestNonPersonalizedAdsOnly: true,
-    keywords: keys.adKeys,
-  },
-);
+const interstitial = InterstitialAd.createForAdRequest(keys.FEATURE_OPEN_ID, {
+  requestNonPersonalizedAdsOnly: true,
+  keywords: keys.adKeys,
+});
 
 const Home = ({navigation}) => {
   const insets = useSafeAreaInsets();
