@@ -17,8 +17,6 @@ import {AuthContext} from './src/api/Authenticate';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
   AdEventType,
-  AdsConsent,
-  AdsConsentStatus,
   AppOpenAd,
   BannerAd,
   BannerAdSize,
@@ -91,21 +89,6 @@ const appOpenAd = AppOpenAd.createForAdRequest(keys.APP_OPEN_ID, {
 const App: () => Node = () => {
   const [ready, setReady] = useState(false);
   const [state, dispatch] = useReducer(reducer, initializeState);
-
-  useEffect(() => {
-    AdsConsent.requestInfoUpdate()
-      .then(consentInfo => {
-        if (
-          consentInfo.isConsentFormAvailable &&
-          consentInfo.status === AdsConsentStatus.REQUIRED
-        ) {
-          AdsConsent.showForm()
-            .then(() => {})
-            .catch(() => {});
-        }
-      })
-      .catch(() => {});
-  }, []);
 
   useEffect(() => {
     const LOADED = appOpenAd.addAdEventListener(AdEventType.LOADED, () => {
