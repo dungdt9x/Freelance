@@ -8,112 +8,148 @@
 
 import React, {useEffect, useReducer, useState} from 'react';
 import type {Node} from 'react';
-import {StatusBar, Text, View} from 'react-native';
+import {NativeModules, StyleSheet, View} from 'react-native';
 import RNBootSplash from 'react-native-bootsplash';
 import AnimatedSplash from 'react-native-animated-splash-screen';
-import {Appbar} from 'react-native-paper';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from './src/api/Authenticate';
 import {createStackNavigator} from '@react-navigation/stack';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import mobileAds, {
+import {
+  AdEventType,
+  AppOpenAd,
   BannerAd,
   BannerAdSize,
-  MaxAdContentRating,
-  TestIds,
 } from 'react-native-google-mobile-ads';
+import {Host} from 'react-native-portalize';
+import images from './src/constants/images';
+import Home from './src/screen/Home';
+import device from './src/constants/device';
+import strings from './src/constants/strings';
+import Search from './src/screen/Search';
+import keys from './src/constants/keys';
+
+const viLocale = require('moment/locale/vi');
+const enLocale = require('moment/locale/es-us');
+const frLocale = require('moment/locale/fr');
 
 const initializeState = {};
 const Stack = createStackNavigator();
 
+const configMomentLocale = language => {
+  const moment = require('moment');
+  if (language === 'vi') {
+    moment.updateLocale('vi', viLocale);
+  } else if (language === 'fr') {
+    moment.updateLocale('fr', frLocale);
+  } else {
+    moment.updateLocale('en', enLocale);
+  }
+};
+
+const deviceLanguage = device.iOS
+  ? NativeModules.SettingsManager.settings.AppleLocale ||
+    NativeModules.SettingsManager.settings.AppleLanguages[0]
+  : NativeModules.I18nManager.localeIdentifier;
+
+if (deviceLanguage.includes('fr')) {
+  strings.setLanguage('fr');
+  configMomentLocale('fr');
+} else if (deviceLanguage.includes('vi')) {
+  strings.setLanguage('vi');
+  configMomentLocale('vi');
+} else {
+  strings.setLanguage('en');
+  configMomentLocale('en');
+}
+
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'A':
-      return {
-        ...state,
-      };
     default:
       return state;
   }
 };
-
-function HomeScreen() {
-  const insets = useSafeAreaInsets();
-  return (
-    <View style={{flex: 1, backgroundColor: 'white', paddingTop: insets.top}}>
-      <StatusBar barStyle={'dark-content'} backgroundColor={'white'} />
-      <Appbar.Header
-        style={{
-          backgroundColor: 'white',
-          elevation: 0,
-        }}>
-        <Appbar.BackAction onPress={() => {}} color={'red'} />
-        <Appbar.Content title="Title" subtitle="Subtitle" />
-        <Appbar.Action icon="magnify" onPress={() => {}} />
-        <Appbar.Action icon="dots-vertical" onPress={() => {}} />
-      </Appbar.Header>
-      <Text>Home Screen</Text>
-    </View>
-  );
-}
-
-function DetailsScreen() {
-  return (
-    <View>
-      <Text>Details Screen</Text>
-    </View>
-  );
-}
 
 const HomeStack = () => {
   return (
     <Stack.Navigator
       initialRouteName="Home"
       screenOptions={{headerShown: false}}>
-      <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Details" component={DetailsScreen} />
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Search" component={Search} />
     </Stack.Navigator>
   );
 };
+
+const appOpenAd = AppOpenAd.createForAdRequest(keys.APP_OPEN_ID, {
+  requestNonPersonalizedAdsOnly: true,
+  keywords: keys.adKeys,
+});
 
 const App: () => Node = () => {
   const [ready, setReady] = useState(false);
   const [state, dispatch] = useReducer(reducer, initializeState);
 
   useEffect(() => {
-    setTimeout(() => {
-      RNBootSplash.hide({fade: true}).then(() => {
-        setReady(true);
-      });
-    }, 500);
+    const LOADED = appOpenAd.addAdEventListener(AdEventType.LOADED, () => {
+      appOpenAd.show().then();
+    });
+
+    const ERROR = appOpenAd.addAdEventListener(AdEventType.ERROR, error => {
+      console.log('Ad error:', error);
+    });
+
+    return () => {
+      LOADED();
+      ERROR();
+    };
   }, []);
 
   return (
-    <GestureHandlerRootView style={{flex: 1}}>
-      <NavigationContainer>
-        <AuthContext.Provider value={{state, dispatch}} />
-        <AnimatedSplash
-          translucent={true}
-          isLoaded={ready}
-          logoImage={require('./src/assets/icons/sun.png')}
-          backgroundColor={'white'}
-          logoHeight={100}
-          logoWidth={100}>
-          {HomeStack()}
-        </AnimatedSplash>
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            alignSelf: 'center',
-            justifyContent: 'center',
-          }}>
-          <BannerAd unitId={TestIds.BANNER} size={BannerAdSize.BANNER} />
-        </View>
+    <GestureHandlerRootView style={styles.rootView}>
+      <NavigationContainer
+        onReady={() => {
+          RNBootSplash.hide({fade: true}).then(() => {
+            setReady(true);
+          });
+          appOpenAd.load();
+        }}>
+        <Host>
+          <AuthContext.Provider value={{state, dispatch}}>
+            <AnimatedSplash
+              translucent={true}
+              isLoaded={ready}
+              logoImage={images.sun}
+              backgroundColor={'white'}
+              logoHeight={120}
+              logoWidth={120}>
+              {HomeStack()}
+            </AnimatedSplash>
+            <View style={styles.bannerView}>
+              <BannerAd
+                unitId={keys.BANNER_ID}
+                size={BannerAdSize.BANNER}
+                requestOptions={{
+                  requestNonPersonalizedAdsOnly: true,
+                  keywords: keys.adKeys,
+                }}
+              />
+            </View>
+          </AuthContext.Provider>
+        </Host>
       </NavigationContainer>
     </GestureHandlerRootView>
   );
 };
 
 export default App;
+
+const styles = StyleSheet.create({
+  rootView: {flex: 1},
+  bannerView: {
+    position: 'absolute',
+    bottom: 0,
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+});
