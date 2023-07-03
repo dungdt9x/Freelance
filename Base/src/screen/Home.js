@@ -40,11 +40,7 @@ const Home = ({navigation}) => {
     });
   }, []);
 
-  useEffect(() => {
-    if (_.isEmpty(currentLocation)) {
-      getCurrentLocation();
-    }
-  }, [currentLocation]);
+  useEffect(() => {}, []);
 
   useEffect(() => {
     let listenEvent = DeviceEventEmitter.addListener(

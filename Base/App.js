@@ -26,7 +26,6 @@ import images from './src/constants/images';
 import Home from './src/screen/Home';
 import device from './src/constants/device';
 import strings from './src/constants/strings';
-import Search from './src/screen/Search';
 import keys from './src/constants/keys';
 
 const viLocale = require('moment/locale/vi');
@@ -76,7 +75,6 @@ const HomeStack = () => {
       initialRouteName="Home"
       screenOptions={{headerShown: false}}>
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Search" component={Search} />
     </Stack.Navigator>
   );
 };

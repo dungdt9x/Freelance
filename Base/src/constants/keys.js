@@ -1,12 +1,7 @@
 const keys = {
-  weatherAPIKey: '984d3b584719e6a048931fb09082613a',
-  googleMapAPIKey: 'AIzaSyDTBpN6GF2yCrwMs6DfVPcY7R6YpOEN6Vg',
-  APP_OPEN_ID: 'ca-app-pub-6965877094704282/5685813936',
-  BANNER_ID: 'ca-app-pub-6965877094704282/9433487259',
-  FEATURE_OPEN_ID: 'ca-app-pub-6965877094704282/2436780163',
-  iOS_OPEN_ID: 'ca-app-pub-6965877094704282/4752006219',
-  iOS_BANNER_ID: 'ca-app-pub-6965877094704282/1004332893',
-  iOS_FEATURE_OPEN_ID: 'ca-app-pub-6965877094704282/3450478935',
+  APP_OPEN_ID: '',
+  BANNER_ID: '',
+  FEATURE_OPEN_ID: '',
   adKeys: [
     'fashion',
     'clothing',
@@ -61,7 +56,6 @@ const keys = {
     'video editor',
     'telegram',
   ],
-  hanoi: {latitude: 21.0245, longitude: 105.8412},
 };
 
 export default keys;
