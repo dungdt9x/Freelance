@@ -1,6 +1,8 @@
 import LocalizedStrings from 'react-localization';
 const Strings = new LocalizedStrings({
   en: {
+    winSpeed: 'Wind speed',
+    airQuality: 'Air quality',
     search: 'Search',
     enterLocation: 'Change location',
     selectDate: 'Select other date',
@@ -10,7 +12,7 @@ const Strings = new LocalizedStrings({
     openSettings: 'Add location',
     updating: 'Updating',
     feelLike: 'Feel like',
-    airQuality: 'Air quality',
+    qu: 'Air quality',
     atmospheric: 'Atmospheric',
     humidity: 'Humidity',
     cloudiness: 'Cloudiness',
@@ -21,6 +23,7 @@ const Strings = new LocalizedStrings({
     other: 'Other day',
   },
   vi: {
+    winSpeed: 'Tốc độ gió',
     airQuality: 'Khí hậu',
     feelLike: 'Cảm giác như',
     permissionDeniedTitle: 'Quyền truy cập vị trí bị từ chối',
