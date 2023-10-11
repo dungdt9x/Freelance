@@ -2642,7 +2642,7 @@ co@^4.6.0:
   resolved "https://registry.yarnpkg.com/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
   integrity sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==
 
-code-push@^4.2.0:
+code-push@^4.1.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/code-push/-/code-push-4.2.0.tgz#58070c7cbc2e2dbbc303e16671c6241f9a60d086"
   integrity sha512-5z+IhqNllGr1AOV2a53gwLawPCfwvLHSBfejU+QBo0w+1Rh8XS/nfGlyf8YDPdslWrtTleBA6Au8npvF9FyJYA==
@@ -6470,12 +6470,12 @@ react-native-bootsplash@^4.3.2:
     jimp "^0.16.1"
     picocolors "^1.0.0"
 
-react-native-code-push@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-8.1.0.tgz#5bf42d749447705ca2d2e6df371b4353ea7afd78"
-  integrity sha512-EJsLeOnRGXTOAQxbL8B7l5XIQqIC++dYYiZneoFYtCiv1t71vrAokniNdk2mL0tKKii8qoIhev0NzRnQAw+FrQ==
+react-native-code-push@7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-code-push/-/react-native-code-push-7.1.0.tgz#9767518d684017993ff32875bfd349ce01298d35"
+  integrity sha512-ZBc4166cbdPUP0m/013IzVZBVwrHdyFAp/JJCYuVyL0G6ki3Yp8a9f7zGm6xTvMzanOT6cm051iYqqNznvGiCA==
   dependencies:
-    code-push "^4.2.0"
+    code-push "^4.1.0"
     glob "^7.1.7"
     hoist-non-react-statics "^3.3.2"
     inquirer "^8.1.5"
