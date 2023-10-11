@@ -15,6 +15,7 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {NavigationContainer} from '@react-navigation/native';
 import {AuthContext} from './src/api/Authenticate';
 import {createStackNavigator} from '@react-navigation/stack';
+import codePush from 'react-native-code-push';
 import {
   AdEventType,
   AppOpenAd,
@@ -142,7 +143,7 @@ const App: () => Node = () => {
   );
 };
 
-export default App;
+export default codePush(App);
 
 const styles = StyleSheet.create({
   rootView: {flex: 1},

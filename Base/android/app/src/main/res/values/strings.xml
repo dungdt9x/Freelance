@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SmartWeather</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">yWgagDFqfaIGuVIkr1Fw84xWlQ0MOUckMk4oo</string>
 </resources>
