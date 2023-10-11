@@ -12,7 +12,6 @@ const Strings = new LocalizedStrings({
     openSettings: 'Add location',
     updating: 'Updating',
     feelLike: 'Feel like',
-    qu: 'Air quality',
     atmospheric: 'Atmospheric',
     humidity: 'Humidity',
     cloudiness: 'Cloudiness',
