@@ -1,6 +1,13 @@
 import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {StatusBar, View, StyleSheet, DeviceEventEmitter} from 'react-native';
+import {
+  StatusBar,
+  View,
+  StyleSheet,
+  DeviceEventEmitter,
+  Text,
+  Dimensions,
+} from 'react-native';
 import {Appbar, IconButton} from 'react-native-paper';
 import fonts from '../constants/fonts';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
@@ -41,6 +48,21 @@ const Search = ({navigation}) => {
           returnKeyType={'default'}
           fetchDetails={true}
           keepResultsAfterBlur={true}
+          textInputProps={{
+            color: colors.black,
+          }}
+          renderRow={(data, index) => (
+            <Text
+              style={{
+                fontSize: 14,
+                fontFamily: fonts.Regular,
+                color: colors.black,
+                maxWidth: Dimensions.get('window').width - 50,
+              }}
+              numberOfLines={1}>
+              {data.description}
+            </Text>
+          )}
           styles={{
             textInputContainer: {
               backgroundColor: colors.white,

@@ -21,6 +21,7 @@ import {
   AppOpenAd,
   BannerAd,
   BannerAdSize,
+  TestIds,
 } from 'react-native-google-mobile-ads';
 import {Host} from 'react-native-portalize';
 import images from './src/constants/images';
@@ -82,7 +83,7 @@ const HomeStack = () => {
   );
 };
 
-const appOpenAd = AppOpenAd.createForAdRequest(keys.APP_OPEN_ID, {
+const appOpenAd = AppOpenAd.createForAdRequest(TestIds.APP_OPEN, {
   requestNonPersonalizedAdsOnly: true,
   keywords: keys.adKeys,
 });
@@ -128,7 +129,7 @@ const App: () => Node = () => {
             </AnimatedSplash>
             <View style={styles.bannerView}>
               <BannerAd
-                unitId={keys.BANNER_ID}
+                unitId={TestIds.BANNER}
                 size={BannerAdSize.BANNER}
                 requestOptions={{
                   requestNonPersonalizedAdsOnly: true,
