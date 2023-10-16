@@ -19,16 +19,13 @@ import Place from '../component/Place';
 import device from '../constants/device';
 import Weather from '../component/Weather';
 import HourlyWeather from '../component/HourlyWeather';
-import {
-  AdEventType,
-  InterstitialAd,
-  TestIds,
-} from 'react-native-google-mobile-ads';
+import {AdEventType, InterstitialAd} from 'react-native-google-mobile-ads';
 import keys from '../constants/keys';
 import Api from '../api/Api';
 import strings from '../constants/strings';
+import Keys from '../constants/keys';
 
-const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+const interstitial = InterstitialAd.createForAdRequest(Keys.FEATURE_OPEN_ID, {
   requestNonPersonalizedAdsOnly: true,
   keywords: keys.adKeys,
 });
