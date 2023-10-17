@@ -27,6 +27,7 @@ import Home from './src/screen/Home';
 import device from './src/constants/device';
 import strings from './src/constants/strings';
 import keys from './src/constants/keys';
+import codePush from 'react-native-code-push';
 
 const viLocale = require('moment/locale/vi');
 const enLocale = require('moment/locale/es-us');
@@ -140,7 +141,7 @@ const App: () => Node = () => {
   );
 };
 
-export default App;
+export default codePush(App);
 
 const styles = StyleSheet.create({
   rootView: {flex: 1},

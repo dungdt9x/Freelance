@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ePhoto</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">OL2eqxk515LuqQP3iBmEB9Fg_Erx3JpGbhqCA</string>
 </resources>

@@ -12,13 +12,19 @@ import images from '../constants/images';
 import Lottie from 'lottie-react-native';
 import strings from '../constants/strings';
 import PopupIntro from '../component/PopupIntro';
-import {requestMultiple, PERMISSIONS} from 'react-native-permissions';
-import {openPicker} from '@baronha/react-native-multiple-image-picker';
+import {
+  requestMultiple,
+  PERMISSIONS,
+  checkMultiple,
+  RESULTS,
+} from 'react-native-permissions';
+import MultipleImagePicker from '@ko-developerhong/react-native-multiple-image-picker';
 import PhotoEditor from '@baronha/react-native-photo-editor';
 import MasonryList from '@react-native-seoul/masonry-list';
 import uuid from 'react-native-uuid';
 import {ImageGallery} from '@georstat/react-native-image-gallery';
 import ActionSheet from 'react-native-actionsheet';
+import DeviceInfo from 'react-native-device-info';
 
 const interstitial = InterstitialAd.createForAdRequest(
   device.iOS ? keys.iOS_FEATURE_OPEN_ID : keys.FEATURE_OPEN_ID,
@@ -78,13 +84,13 @@ const Home = ({navigation}) => {
               ePhoto
             </Text>
           </View>
-          <Appbar.Action
-            icon="chat-alert"
-            color={colors.red}
-            onPress={() => {
-              Alert.alert(strings.helping, strings.helpingMsg);
-            }}
-          />
+          {/*<Appbar.Action*/}
+          {/*  icon="chat-alert"*/}
+          {/*  color={colors.red}*/}
+          {/*  onPress={() => {*/}
+          {/*    Alert.alert(strings.helping, strings.helpingMsg);*/}
+          {/*  }}*/}
+          {/*/>*/}
         </Appbar.Header>
       </View>
     );
@@ -94,9 +100,121 @@ const Home = ({navigation}) => {
     return <View style={{flex: 1}}>{renderData}</View>;
   };
 
+  const checkPermission = async () => {
+    let version = DeviceInfo.getSystemVersion();
+    if (parseFloat(version) < 13) {
+      return new Promise(resolve => {
+        checkMultiple([
+          PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+          PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+        ])
+          .then(result => {
+            if (
+              result &&
+              result[PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE] ===
+                RESULTS.GRANTED &&
+              result[PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE] ===
+                RESULTS.GRANTED
+            ) {
+              resolve(true);
+            } else {
+              requestMultiple([
+                PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+                PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+              ])
+                .then(r => {
+                  if (
+                    r &&
+                    r[PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE] ===
+                      RESULTS.GRANTED &&
+                    r[PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE] ===
+                      RESULTS.GRANTED
+                  ) {
+                    resolve(true);
+                  } else {
+                    resolve(false);
+                  }
+                })
+                .catch(() => {
+                  resolve(false);
+                });
+            }
+          })
+          .catch(() => {
+            requestMultiple([
+              PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+              PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
+            ])
+              .then(r => {
+                if (
+                  r &&
+                  r[PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE] ===
+                    RESULTS.GRANTED &&
+                  r[PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE] ===
+                    RESULTS.GRANTED
+                ) {
+                  resolve(true);
+                } else {
+                  resolve(false);
+                }
+              })
+              .catch(() => {
+                resolve(false);
+              });
+          });
+      });
+    } else {
+      return new Promise(resolve => {
+        checkMultiple([PERMISSIONS.ANDROID.READ_MEDIA_IMAGES])
+          .then(result => {
+            if (
+              result &&
+              result[PERMISSIONS.ANDROID.READ_MEDIA_IMAGES] === RESULTS.GRANTED
+            ) {
+              resolve(true);
+            } else {
+              requestMultiple([PERMISSIONS.ANDROID.READ_MEDIA_IMAGES])
+                .then(r => {
+                  if (
+                    r &&
+                    r[PERMISSIONS.ANDROID.READ_MEDIA_IMAGES] === RESULTS.GRANTED
+                  ) {
+                    resolve(true);
+                  } else {
+                    resolve(false);
+                  }
+                })
+                .catch(error => {
+                  console.log('ERROR: ', error);
+                  resolve(false);
+                });
+            }
+          })
+          .catch(() => {
+            requestMultiple([PERMISSIONS.ANDROID.READ_MEDIA_IMAGES])
+              .then(result => {
+                if (
+                  result &&
+                  result[PERMISSIONS.ANDROID.READ_MEDIA_IMAGES] ===
+                    RESULTS.GRANTED
+                ) {
+                  resolve(true);
+                } else {
+                  resolve(false);
+                }
+              })
+              .catch(error => {
+                console.log('ERROR: ', error);
+                resolve(false);
+              });
+          });
+      });
+    }
+  };
+
   const openImagePicker = async () => {
     try {
-      let image = await openPicker({
+      let image = await MultipleImagePicker.openPicker({
         selectedAssets: [],
         isExportThumbnail: false,
         maxSelectedAssets: 1,
@@ -266,7 +384,6 @@ const Home = ({navigation}) => {
             }, 200);
           }}
           onLongPress={() => {
-            console.log('ABC');
             currentIndexRef.current = index;
             actionSheet.current?.show();
           }}
@@ -438,14 +555,9 @@ const Home = ({navigation}) => {
           setFirstTime(false);
           Storages.set('ready', true);
           setTimeout(() => {
-            requestMultiple([
-              PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
-              PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE,
-              PERMISSIONS.ANDROID.CAMERA,
-              PERMISSIONS.ANDROID.READ_MEDIA_IMAGES,
-            ]).then(statuses => {
-              console.log('statuses', statuses);
-            });
+            checkPermission()
+              .then(() => {})
+              .catch(() => {});
           }, 200);
         }}
       />
