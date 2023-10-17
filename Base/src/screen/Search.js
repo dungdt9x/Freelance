@@ -50,6 +50,7 @@ const Search = ({navigation}) => {
           keepResultsAfterBlur={true}
           textInputProps={{
             color: colors.black,
+            placeholderTextColor: colors.gray,
           }}
           renderRow={(data, index) => (
             <Text
@@ -73,7 +74,9 @@ const Search = ({navigation}) => {
               color: colors.black,
               fontSize: 14,
               fontsFamily: fonts.Regular,
+              placeholderTextColor: colors.gray,
             },
+            placeholderTextColor: colors.gray,
             predefinedPlacesDescription: {
               color: '#1faadb',
             },
