@@ -89,7 +89,11 @@ const Home = ({navigation}) => {
                 color={colors.red}
                 size={25}
                 onPress={() => {
-                  interstitial.load();
+                  let count = Storages.getNumber('pressCount') ?? 0;
+                  if ((count + 1) % 5 === 0) {
+                    interstitial.load();
+                  }
+                  Storages.set('pressCount', count + 1);
                   navigation.push('Search');
                 }}
               />
@@ -98,7 +102,11 @@ const Home = ({navigation}) => {
             <Appbar.Action
               icon="magnify"
               onPress={() => {
-                interstitial.load();
+                let count = Storages.getNumber('pressCount') ?? 0;
+                if ((count + 1) % 5 === 0) {
+                  interstitial.load();
+                }
+                Storages.set('pressCount', count + 1);
                 navigation.push('Search');
               }}
             />
@@ -137,7 +145,11 @@ const Home = ({navigation}) => {
             style={styles.buttonSetting}
             labelStyle={styles.buttonTitle}
             onPress={() => {
-              interstitial.load();
+              let count = Storages.getNumber('pressCount') ?? 0;
+              if ((count + 1) % 5 === 0) {
+                interstitial.load();
+              }
+              Storages.set('pressCount', count + 1);
               navigation.push('Search');
             }}>
             {strings.openSettings}
@@ -151,7 +163,11 @@ const Home = ({navigation}) => {
         <HourlyWeather
           location={currentLocation}
           onSelect={() => {
-            interstitial.load();
+            let count = Storages.getNumber('pressCount') ?? 0;
+            if ((count + 1) % 5 === 0) {
+              interstitial.load();
+            }
+            Storages.set('pressCount', count + 1);
           }}
         />
       </View>
