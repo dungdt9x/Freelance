@@ -316,7 +316,11 @@ const Home = ({navigation}) => {
             style={styles.buttonSetting}
             labelStyle={styles.buttonTitle}
             onPress={() => {
-              interstitial.load();
+              let count = Storages.getNumber('pressCount') ?? 0;
+              if ((count + 1) % 5 === 0) {
+                interstitial.load();
+              }
+              Storages.set('pressCount', count + 1);
               setTimeout(() => {
                 openImagePicker()
                   .then(() => {})
@@ -345,7 +349,11 @@ const Home = ({navigation}) => {
         />
         <TouchableRipple
           onPress={() => {
-            interstitial.load();
+            let count = Storages.getNumber('pressCount') ?? 0;
+            if ((count + 1) % 5 === 0) {
+              interstitial.load();
+            }
+            Storages.set('pressCount', count + 1);
             setTimeout(() => {
               openImagePicker()
                 .then(() => {})
@@ -451,7 +459,11 @@ const Home = ({navigation}) => {
             color={colors.white}
             onPress={() => {
               closeGallery();
-              interstitial.load();
+              let count = Storages.getNumber('pressCount') ?? 0;
+              if ((count + 1) % 5 === 0) {
+                interstitial.load();
+              }
+              Storages.set('pressCount', count + 1);
               setTimeout(() => {
                 console.log('Image: ', image);
                 if (image && image.url) {
@@ -525,13 +537,19 @@ const Home = ({navigation}) => {
               }, 200);
               break;
             case 2:
-              interstitial.load();
-              setTimeout(() => {
-                let image = dataRef.current[currentIndexRef.current];
-                if (image && image.url) {
-                  editPhoto(image.url, image.id);
+              {
+                let count = Storages.getNumber('pressCount') ?? 0;
+                if ((count + 1) % 5 === 0) {
+                  interstitial.load();
                 }
-              }, 200);
+                Storages.set('pressCount', count + 1);
+                setTimeout(() => {
+                  let image = dataRef.current[currentIndexRef.current];
+                  if (image && image.url) {
+                    editPhoto(image.url, image.id);
+                  }
+                }, 200);
+              }
               break;
             case 3:
               let findObject = dataRef.current[currentIndexRef.current];
