@@ -84,13 +84,6 @@ const Home = ({navigation}) => {
               ePhoto
             </Text>
           </View>
-          {/*<Appbar.Action*/}
-          {/*  icon="chat-alert"*/}
-          {/*  color={colors.red}*/}
-          {/*  onPress={() => {*/}
-          {/*    Alert.alert(strings.helping, strings.helpingMsg);*/}
-          {/*  }}*/}
-          {/*/>*/}
         </Appbar.Header>
       </View>
     );
@@ -436,24 +429,6 @@ const Home = ({navigation}) => {
         </Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <IconButton
-            icon={'share-variant'}
-            size={21}
-            color={colors.white}
-            onPress={() => {
-              closeGallery();
-              Alert.alert(strings.upcoming, strings.featureUpcoming);
-            }}
-          />
-          <IconButton
-            icon={'content-save'}
-            size={21}
-            color={colors.white}
-            onPress={() => {
-              closeGallery();
-              Alert.alert(strings.upcoming, strings.featureUpcoming);
-            }}
-          />
-          <IconButton
             icon={'pencil'}
             size={21}
             color={colors.white}
@@ -518,25 +493,11 @@ const Home = ({navigation}) => {
       />
       <ActionSheet
         ref={actionSheet}
-        options={[
-          strings.share,
-          strings.save,
-          strings.edit,
-          strings.delete,
-          strings.close,
-        ]}
+        options={[strings.edit, strings.delete, strings.close]}
         destructiveButtonIndex={3}
         onPress={index => {
           switch (index) {
             case 0:
-              Alert.alert(strings.upcoming, strings.featureUpcoming);
-              break;
-            case 1:
-              setTimeout(() => {
-                Alert.alert(strings.upcoming, strings.featureUpcoming);
-              }, 200);
-              break;
-            case 2:
               {
                 let count = Storages.getNumber('pressCount') ?? 0;
                 if ((count + 1) % 5 === 0) {
@@ -551,7 +512,7 @@ const Home = ({navigation}) => {
                 }, 200);
               }
               break;
-            case 3:
+            case 1:
               let findObject = dataRef.current[currentIndexRef.current];
               if (findObject) {
                 let newData = dataRef.current.filter(
