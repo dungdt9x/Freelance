@@ -27,7 +27,7 @@ import ActionSheet from 'react-native-actionsheet';
 import DeviceInfo from 'react-native-device-info';
 
 const interstitial = InterstitialAd.createForAdRequest(
-  device.iOS ? keys.iOS_FEATURE_OPEN_ID : keys.FEATURE_OPEN_ID,
+  device.isIOS ? keys.iOS_FEATURE_OPEN_ID : keys.FEATURE_OPEN_ID,
   {
     requestNonPersonalizedAdsOnly: true,
     keywords: keys.adKeys,

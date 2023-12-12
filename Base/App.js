@@ -47,7 +47,7 @@ const configMomentLocale = language => {
   }
 };
 
-const deviceLanguage = device.iOS
+const deviceLanguage = device.isIOS
   ? NativeModules.SettingsManager.settings.AppleLocale ||
     NativeModules.SettingsManager.settings.AppleLanguages[0]
   : NativeModules.I18nManager.localeIdentifier;
@@ -85,7 +85,7 @@ const App: () => Node = () => {
   const [state, dispatch] = useReducer(reducer, initializeState);
 
   const appOpenAd = AppOpenAd.createForAdRequest(
-    device.iOS ? keys.iOS_OPEN_ID : keys.APP_OPEN_ID,
+    device.isIOS ? keys.iOS_OPEN_ID : keys.APP_OPEN_ID,
     {
       requestNonPersonalizedAdsOnly: true,
       keywords: keys.adKeys,
@@ -126,7 +126,7 @@ const App: () => Node = () => {
             </AnimatedSplash>
             <View style={styles.bannerView}>
               <BannerAd
-                unitId={device.iOS ? keys.iOS_BANNER_ID : keys.BANNER_ID}
+                unitId={device.isIOS ? keys.iOS_BANNER_ID : keys.BANNER_ID}
                 size={BannerAdSize.BANNER}
                 requestOptions={{
                   requestNonPersonalizedAdsOnly: true,
