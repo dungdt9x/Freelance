@@ -5,9 +5,23 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Base</string>
+	<string>TicTop</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>TicTop uses your location for language detection and lets you share it with friends for seamless connections</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>TicTop uses your location for language detection and lets you share it with friends for seamless connections</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>TicTop requires access to your photos for uploading attachments</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>TicTop requests permission to save edited and updated photos</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>TicTop want to access your microphone to make record audio for upload attachments</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>TicTop uses your location for language detection and lets you share it with friends for seamless connections</string>
+	<key>NSCameraUsageDescription</key>
+	<string>TicTop requires camera access to capture pictures for uploading attachments</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -35,8 +49,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>UILaunchStoryboardName</key>
 	<string>BootSplash.storyboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -74,11 +86,5 @@
 		<string>Zocial.ttf</string>
 		<string>Fontisto.ttf</string>
 	</array>
-	<key>NSCameraUsageDescription</key>
-	<string>Access Camera Request</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Access Microphone Request</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Access Photo Request</string>
 </dict>
 </plist>
