@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "npx react-native run-android --appId com.hsmart.weather",
-    "ios": "npx react-native run-ios --simulator=\"iPhone 15 Pro Max\"",
+    "ios": "npx react-native run-ios",
     "start": "npx react-native start",
     "test": "jest",
     "android:devices": "cd /Users/dungdt/Library/Android/sdk/platform-tools && adb devices",
